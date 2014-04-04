@@ -1,0 +1,136 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	overflow:hidden;
+}
+
+
+.hashSideBar{
+	height:1500px;
+	background: #111111;
+}
+
+.hashHomeBackground{
+	height:1500px;
+	padding:30px;
+	background:#171717;
+}
+
+
+.hashStoryBox{
+	padding:0px;
+	margin-bottom:30px;
+}
+
+.hashStoryContentBody{
+	background:#212121;
+}
+
+.hashStoryImageBox{
+
+}
+
+.hashStoryImage{
+	width:373px;
+	height:auto;
+}
+
+.hashHashTag{
+	color:#4e4e4e;
+	font-size:14px;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+
+
+.hashStoryLabel{
+	float:right;
+	margin-right:0px;
+	width:40px;
+	height:35px;
+	padding-top:8px;
+	border-radius:0px;
+	text-align:center;
+	background:#f51e4d;
+	color:#fff;		
+	font-size: 14px;
+	letter-spacing:1.3px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.hashStoryLabelGreen {
+	float:right;
+	width:40px;
+	height:35px;
+	padding-top:8px;
+	border-radius:0px;
+	text-align:center;
+	background:#1dcc16;
+	color:#fff;		
+	font-size: 14px;
+	letter-spacing:1.3px;
+	font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.hashStoryLabelOrange {
+	float:right;
+	width:40px;
+	height:35px;
+	padding-top:8px;
+	border-radius:0px;
+	text-align:center;
+	background:#f87022;
+	color:#fff;		
+	font-size: 14px;
+	letter-spacing:1.3px;
+	font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+.hashStoryHeading{
+	color:#ddd;
+	margin-top:0px;
+}
+
+.hashStoryContent{
+	color:#bbb;
+	text-align:justify;
+}
+
+
+/*Defining Style for hashbangMain */
+.hashMainBackground{
+	background:#eee;
+	
+}
+
+.hashMainColumn
+{
+	
+	height:1300px;
+
+	
+}
+
+.hashMainStory{
+	background:#F00;
+	height:400px;
+	text-align:justify;
+}
+
+.hashMainHalfStory{
+	
+	swidth:230px;
+	text-align:justify;
+	background:#F00;
+}
+
+.hashMainHalfColumn{
+	height:1300px;
+	padding-right:0px;
+	overflow-x:hidden;
+}
