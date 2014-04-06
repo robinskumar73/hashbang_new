@@ -1,10 +1,57 @@
 @charset "utf-8";
 /* CSS Document */
+/*CSS DOCUMENT DESIGNED BY ROBINS GUPTA. */
+
 
 body{
 	overflow:hidden;
 }
 
+
+/*----------------------------------------------- UI DESIGN COMMON STYLES ----------------------------------------------*/
+/*Shadow effect for cross browser window*/
+.shadow {
+	/*horizental offset, vertical offset, blur radius, Spread distance,   */
+	-moz-box-shadow: 1px 1px 1px 1px #cbc5c5;
+	-webkit-box-shadow: 1px 1px 1px 1px #cbc5c5;
+	box-shadow: 1px 1px 1px 1px #cbc5c5; 
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#cbc5c5')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#cbc5c5');
+}
+
+.hashBookMarkBox
+{
+	background:#fff;
+	width:30px;
+	height:27px;
+	color:#878686;
+	text-align:center;
+	padding-top:7px;
+}
+
+.hashBookMarkBox:hover
+{
+	color:#333;
+	
+	cursor: pointer ;	
+}
+
+.hashBookMarkBox:active
+{
+	background:#fff;
+	/*horizental offset, vertical offset, blur radius, Spread distance,   */
+	-moz-box-shadow: inset 1px 1px 1px 1px #cbc5c5;
+	-webkit-box-shadow: inset 1px 1px 1px 1px #cbc5c5;
+	box-shadow: inset 1px 1px 1px 1px #cbc5c5; 
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#cbc5c5')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#cbc5c5');
+		
+}
+
+
+
+
+/*------------------------------------------------ STYLE FOR HOME PAGE --------------------------------------------------*/
 
 .hashSideBar{
 	height:1500px;
@@ -28,11 +75,11 @@ body{
 }
 
 .hashStoryImageBox{
-
+	padding:0px;
 }
 
 .hashStoryImage{
-	width:373px;
+	width:inherit;
 	height:auto;
 }
 
@@ -102,35 +149,87 @@ body{
 }
 
 
-/*Defining Style for hashbangMain */
+
+/*---------------------------------------Defining Style for HASHBANG MAIN AREA----------------------------------------- */
+
+
 .hashMainBackground{
-	background:#eee;
-	
+	/*background:#eee;
+	*/
+
 }
 
 .hashMainColumn
 {
-	
-	height:1300px;
 
+	border-style:solid;
+	border-color:#ddd;
+	border-width:0px 1px 0px 0px;
+	padding-top:15px;
 	
 }
 
 .hashMainStory{
-	background:#F00;
-	height:400px;
-	text-align:justify;
+	/*padding:0px;*/
 }
 
 .hashMainHalfStory{
-	
-	swidth:230px;
+	padding-top:30px;
+	width:230px;
 	text-align:justify;
-	background:#F00;
+
 }
 
 .hashMainHalfColumn{
 	height:1300px;
 	padding-right:0px;
 	overflow-x:hidden;
+}
+
+.hashStoryMainHeading{
+	padding-top:0px;
+	margin-top:10px;
+	margin-bottom:0px;
+	padding-bottom:20px;
+	color:#424542;
+}
+
+.hashMainStoryParagraph{
+	color:#393b39;
+	padding-bottom:30px;
+	font-size:16px;
+
+}
+
+
+.hashMainStoryImage{
+	width: inherit;
+	height:auto;
+	padding:5px;
+	margin-bottom:30px;
+}
+
+.hashMainStoryImageBox{
+	padding:0px 20px 0px 20px;
+}
+
+.hashCurrentPageNav{
+	height:8px;
+	background:#63bff4;
+	border-style:solid;
+	border-color:#eee;
+	border-width:0px 1px 0px 0px;
+	overflow:hidden;
+	
+}
+
+.hashNextPageNav{
+	height:8px;
+	background:#19da6a;
+	overflow:hidden;
+}
+
+.hashMainStoryHashTag{
+	padding-bottom:0px;
+	margin-bottom:0px;
 }
