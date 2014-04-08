@@ -6,6 +6,7 @@
 body{
 	overflow:hidden;
 	margin-left:220px;
+	/*background:url(../images/whiteback.png) repeat; */
 }
 }
 body{
@@ -93,7 +94,7 @@ body{
 }
 @media (min-width: 768px) {
 .hashSideBar {
-	height:700px;
+	
 	background: #111111;
     display: block;
     overflow-x: hidden;
