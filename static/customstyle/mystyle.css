@@ -2,9 +2,25 @@
 /* CSS Document */
 /*CSS DOCUMENT DESIGNED BY ROBINS GUPTA. */
 
-
+@media (min-width: 768px) {
 body{
 	overflow:hidden;
+	margin-left:220px;
+}
+}
+body{
+	overflow:hidden;
+}
+
+
+@font-face{
+	font-family:Lato-Bold-Italic;
+	src:url(../bootstrap/fonts/Lato/Lato-BoldItalic.ttf);
+}
+
+@font-face{
+	font-family:Lato;
+	src:url(../bootstrap/fonts/Lato/Lato-Regular.ttf);
 }
 
 
@@ -19,12 +35,23 @@ body{
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#cbc5c5');
 }
 
+.hashSideBarShadow{
+
+	/*horizental offset, vertical offset, blur radius, Spread distance,   */
+	-moz-box-shadow: 1px 1px 1px 1px #141414;
+	-webkit-box-shadow: 1px 1px 1px 1px #141414;
+	box-shadow: 1px 1px 1px 1px #141414; 
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#141414')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#141414');
+}
+
+
 .hashBookMarkBox
 {
 	background:#fff;
 	width:30px;
 	height:27px;
-	color:#878686;
+	color:#999;
 	text-align:center;
 	padding-top:7px;
 }
@@ -51,12 +78,190 @@ body{
 
 
 
+
+/*				-------------------------------STYLE FOR SIDEBAR -----------------------------------*/
+
+
+
+
+
+
+
+/* Hide for mobile, show later */
+.hashSideBar {
+  display: none;
+}
+@media (min-width: 768px) {
+.hashSideBar {
+	height:700px;
+	background: #111111;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+	position:fixed;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	z-index:1000;
+	width:220px;
+	
+  }
+}
+
+.logo{
+
+	font-family:"Nueva Std Cond";
+	padding-top:30px;
+	font-size:35px;
+	text-align:center;
+	color:#ddd;
+
+}
+
+@media (min-width: 768px) {
+.logo {
+	
+	margin:30px auto 10px auto;
+	margin-left:35px;
+  }
+}
+
+.hashUsernameSidebar{
+	/*font-family:Arial, Helvetica, sans-serif;*/
+	font-family: Lato, sans-serif;
+	color:#555555;
+	font-size:11px;
+	margin-bottom:50px;
+	text-align:center;
+	
+}
+
+
+.logo:hover{
+	color:#fff;
+}
+
+
+.hashSearchSidebar{
+	background:#212121;
+	border:none;
+	color:#eee;
+	border-radius:0px;
+	
+}
+
+.hashSearchSidebar:focus{
+	box-shadow: none ;
+	border:none;
+	color:eee;
+}
+
+.hashSearchBox{
+	padding:0px 20px 0px 20px;
+	
+}
+
+.hashAdjustTopIcon{
+	color:#777777;
+	top:0px !important;
+	right:14px !important;
+}
+
+.hashAdjustTopIcon:hover{
+	color:#cccccc;
+	cursor:pointer;
+}
+
+
+
+
+.hashTrendingHeading{
+	
+	font-family:Lato, sans-serif;
+	font-size:16px;
+	margin-top:120px;
+	color:#bbbbbb;
+	padding-left:20px;
+	padding-bottom:7px;
+}
+
+
+.hashTrendingListHeadingColorBox{
+	width:7px;
+	height:7px;
+	background:#f61e4c;
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:70px;
+}
+
+
+
+.hashTrendingHeading:hover div.hashTrendingListHeadingColorBox{
+	background:#b30b2e;
+}
+
+
+.hashTrendinglist{
+	
+	margin-top:10px;
+	list-style-type:none;
+	color:#777777;
+	padding-left:20px;
+	text-align:left;
+	word-wrap:break-word;
+	word-break:break-strict;
+	font-family:Lato, sans-serif;
+	
+	
+}
+
+.hashListItemTrending{
+	margin-bottom:5px;
+	padding-right:7px;
+	
+
+}
+
+.hashListItemTrending:hover{
+	cursor:pointer;
+	color:#999999;
+}
+
+.hashUserSettingInfo{
+	margin-left:38px;
+	position: fixed;
+	bottom:40px;
+}
+
+.hashSideBarBookMarkBox{
+	background:#212121;
+	width:45px;
+	height:40px;
+	color:#8e8d8d;
+	text-align:center;
+	padding-top:11px;
+	font-size:17px;
+	cursor:pointer;
+}
+
+.hashSideBarBookMarkBox:hover{
+	color:#ababab;
+}
+
+.hashSideBarBookMarkBox:active{
+	/*horizental offset, vertical offset, blur radius, Spread distance,   */
+	-moz-box-shadow: inset 1px 1px 1px 1px #141414;
+	-webkit-box-shadow: inset 1px 1px 1px 1px #141414;
+	box-shadow: inset 1px 1px 1px 1px #141414; 
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#141414')";
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#141414');
+}
+
+
 /*------------------------------------------------ STYLE FOR HOME PAGE --------------------------------------------------*/
 
-.hashSideBar{
-	height:1500px;
-	background: #111111;
-}
+
 
 .hashHomeBackground{
 	height:1500px;
@@ -174,7 +379,7 @@ body{
 }
 
 .hashMainHalfStory{
-	padding-top:30px;
+	padding-top:15px;
 	width:230px;
 	text-align:justify;
 
@@ -213,9 +418,10 @@ body{
 	padding:0px 20px 0px 20px;
 }
 
+@media (min-width: 768px) {
 .hashCurrentPageNav{
-	height:8px;
-	background:#63bff4;
+	height:7px;
+	background:#f61e4c;
 	border-style:solid;
 	border-color:#eee;
 	border-width:0px 1px 0px 0px;
@@ -224,12 +430,21 @@ body{
 }
 
 .hashNextPageNav{
-	height:8px;
-	background:#19da6a;
+	height:7px;
+	background:#7144fe;
 	overflow:hidden;
 }
+}
+
 
 .hashMainStoryHashTag{
 	padding-bottom:0px;
 	margin-bottom:0px;
+	color:#3b3b3b;
+	font-size:14px;
+	font-family:Lato-Bold-Italic, sans-serif;
+	cursor:pointer;
+}
+.hashMainStoryHashTag:hover{
+	color:#1b1b1b;
 }
