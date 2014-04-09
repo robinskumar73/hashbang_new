@@ -4,13 +4,15 @@
 
 @media (min-width: 768px) {
 body{
-	overflow:hidden;
+	overflow:auto;
 	margin-left:220px;
+	margin-bottom:160px;
 	/*background:url(../images/whiteback.png) repeat; */
 }
 }
 body{
 	overflow:hidden;
+	
 }
 
 
@@ -179,12 +181,18 @@ body{
 .hashTrendingHeading{
 	
 	font-family:Lato, sans-serif;
-	font-size:16px;
+	font-size:15px;
 	margin-top:120px;
 	color:#bbbbbb;
 	padding-left:20px;
 	padding-bottom:7px;
+	padding-top:4px;
+	cursor:pointer;
+	border-style:solid;
+	border-color:#222222;
+	border-width:1px 0px 1px 0px;
 }
+
 
 
 .hashTrendingListHeadingColorBox{
@@ -194,6 +202,7 @@ body{
 	display:inline-block;
 	vertical-align:middle;
 	margin-left:70px;
+	margin-bottom:0px;
 }
 
 
@@ -203,12 +212,37 @@ body{
 }
 
 
+/*
+.hashPostStoryHeading{
+	font-family:Lato, sans-serif;
+	font-size:16px;
+	margin-top:110px;
+	color:#bbbbbb;
+	padding-left:20px;
+	padding-bottom:0px;
+	cursor:pointer;
+}
+
+.hashPostStoryHeadingColorBox{
+	width:7px;
+	height:7px;
+	background:#30e007;
+	display:inline-block;
+	vertical-align:middle;
+	margin-left:95px;
+}
+.hashPostStoryHeading:hover div.hashPostStoryHeadingColorBox{
+	background:#25a607;
+}
+*/
+
+
 .hashTrendinglist{
-	
-	margin-top:10px;
+
 	list-style-type:none;
 	color:#777777;
 	padding-left:20px;
+	padding-top:10px;
 	text-align:left;
 	word-wrap:break-word;
 	word-break:break-strict;
@@ -362,6 +396,7 @@ body{
 .hashMainBackground{
 	/*background:#eee;
 	*/
+	
 
 }
 
@@ -371,12 +406,13 @@ body{
 	border-style:solid;
 	border-color:#ddd;
 	border-width:0px 1px 0px 0px;
-	padding-top:15px;
+	padding:15px 0 15px 0;
 	
 }
 
 .hashMainStory{
-	/*padding:0px;*/
+	padding-left:30px;
+	padding-right:30px;
 }
 
 .hashMainHalfStory{
@@ -448,4 +484,55 @@ body{
 }
 .hashMainStoryHashTag:hover{
 	color:#1b1b1b;
+}
+
+.hashTotalVoteFlag{
+	background:url(../images/flag.png) no-repeat;
+	width:60px;
+	height:35px;
+	color:#ddd;
+	float:right;
+	padding-top:7px;
+	text-align:center;
+	display:inline-block;
+	vertical-align:middle;
+	font-family:Lato, sans-serif;
+	overflow:hidden;
+}
+
+.hashTotalVoteFlag:hover{
+	color:#fff;
+}
+
+.hashMainStoryMetadata{
+	padding:0px;
+}
+
+.hashMainVotesThumb{
+	text-align:right;
+	cursor:pointer;
+}
+
+.hashMainHashTagPostBox{
+	padding-left:30px;
+	padding-right:30px;
+	
+}
+
+.hashMainStoryMetadataHashtag{
+	padding-left:30px;
+	padding-right:30px;
+	height:50px;
+
+}
+
+.hashMainHashTagPost{
+
+	border-radius:0;
+}
+
+.hashMainHashTagPost:focus{
+	box-shadow:none ;
+	-moz-box-shadow: none ;
+	-webkit-box-shadow:none ;
 }
