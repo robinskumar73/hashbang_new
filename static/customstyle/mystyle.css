@@ -2,17 +2,19 @@
 /* CSS Document */
 /*CSS DOCUMENT DESIGNED BY ROBINS GUPTA. */
 
-@media (min-width: 768px) {
+@media (min-width: 768px)and (max-height:700px ) {
 body{
-	overflow:auto;
-	margin-left:220px;
-	margin-bottom:160px;
+	height:100%;
+  	height: 100vh;
+	
+
 	/*background:url(../images/whiteback.png) repeat; */
 }
 }
+
 body{
+	margin-left:220px;	
 	overflow:hidden;
-	
 }
 
 
@@ -21,10 +23,13 @@ body{
 	src:url(../bootstrap/fonts/Lato/Lato-BoldItalic.ttf);
 }
 
+
 @font-face{
 	font-family:Lato;
 	src:url(../bootstrap/fonts/Lato/Lato-Regular.ttf);
 }
+
+
 
 
 /*----------------------------------------------- UI DESIGN COMMON STYLES ----------------------------------------------*/
@@ -176,6 +181,19 @@ body{
 }
 
 
+.hashLoadingDisplayHidden{
+	/*Default to hidden*/
+	
+	display:none;
+	
+}
+
+
+#squaresWaveG{
+	position:relative;
+	bottom:30px;
+	left:70px;
+}
 
 
 .hashTrendingHeading{
@@ -246,10 +264,16 @@ body{
 	text-align:left;
 	word-wrap:break-word;
 	word-break:break-strict;
-	font-family:Lato, sans-serif;
-	
+	font-size:15px;
+	/*font-family:Lato, sans-serif;*/
+	font-family:Calibri, Arial, Verdana;
 	
 }
+
+.hashTrendinglist a {
+	color:#777777;	
+}
+
 
 .hashListItemTrending{
 	margin-bottom:5px;
@@ -258,15 +282,16 @@ body{
 
 }
 
-.hashListItemTrending:hover{
+.hashListItemTrending:hover, .hashTrendinglist a:hover{
 	cursor:pointer;
-	color:#999999;
+	color:#ccc;
 }
 
 .hashUserSettingInfo{
 	margin-left:38px;
-	position: fixed;
-	bottom:40px;
+	position:relative ;
+	top:20px;
+
 }
 
 .hashSideBarBookMarkBox{
@@ -293,13 +318,33 @@ body{
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#141414');
 }
 
+.hashPanelHeading{
+	background:#111111 !important;		
+}
+
+.hashPanelGroup{
+	font-family:Lato, sans-serif;
+	font-size:15px;
+	margin-top:120px;
+	color:#bbbbbb;
+	padding-bottom:7px;
+	padding-top:4px;
+	cursor:pointer;
+	border-style:solid;
+	border-color:#222222;
+	border-width:1px 0px 1px 0px;
+}
+
+
+
 
 /*------------------------------------------------ STYLE FOR HOME PAGE --------------------------------------------------*/
 
 
 
 .hashHomeBackground{
-	height:1500px;
+	height:100%;
+	height:100vh;
 	padding:30px;
 	background:#171717;
 }
@@ -405,9 +450,12 @@ body{
 
 	border-style:solid;
 	border-color:#ddd;
-	border-width:0px 1px 0px 0px;
+	border-width:0px 1px 1px 0px;
 	padding:15px 0 15px 0;
-	
+	/*Setting its height to 100% of screen size*/
+	overflow:hidden;
+	height:100%;
+	height:100vh;
 }
 
 .hashMainStory{
@@ -417,13 +465,22 @@ body{
 
 .hashMainHalfStory{
 	padding-top:15px;
-	width:230px;
-	text-align:justify;
 
 }
 
+@media (min-width: 768px) {
+	
+.hashMainHalfStory{
+	padding-left:30px;
+	padding-right:30px;
+	width:477px;
+	text-align:justify;
+
+}
+}
+
 .hashMainHalfColumn{
-	height:1300px;
+
 	padding-right:0px;
 	overflow-x:hidden;
 }
@@ -438,10 +495,10 @@ body{
 
 .hashMainStoryParagraph{
 	color:#393b39;
-	padding-bottom:30px;
+	margin-bottom:30px;
 	font-size:16px;
-
 }
+
 
 
 .hashMainStoryImage{
@@ -455,7 +512,7 @@ body{
 	padding:0px 20px 0px 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px)  {
 .hashCurrentPageNav{
 	height:7px;
 	background:#f61e4c;
@@ -471,6 +528,7 @@ body{
 	background:#7144fe;
 	overflow:hidden;
 }
+
 }
 
 
@@ -486,6 +544,66 @@ body{
 	color:#1b1b1b;
 }
 
+
+.hashMainStoryPostedHashTag{
+	padding-bottom:3px;
+	padding-right:8px;
+	display:inline-block;
+	color:#235ea7;
+	font-size:15px;
+	
+	/*font-weight:bold; */
+	font-family:Calibri, Arial, Verdana; 
+
+	cursor:pointer;
+	margin-bottom:0px;
+	margin-top:8px;
+}
+
+.hashMainStoryPostedHashTag:hover{
+	/*color:#1b1b1b;*/
+	color:#184b8b;
+	font-weight:bold;
+}
+
+.testPostedHashTag{
+	margin-bottom:14px;
+	padding-right:10px;
+	margin-bottom:0px;
+	color:#128be0;
+	font-size:14px;
+	font-family:Lato-Bold-Italic, sans-serif;
+	cursor:pointer;
+}
+
+.hashMainStoryPostedHashTag-Green{
+	color:#05c81b;
+}
+.hashMainStoryPostedHashTag-Green:hover{
+	color:#0ab21e;
+}
+
+.hashMainStoryPostedHashTag-Yellow{
+	color:#dfd207;
+}
+.hashMainStoryPostedHashTag-Yellow:hover{
+	color:#c2b927;
+}
+
+.hashMainStoryPostedHashTag-Maroon{
+	color:#822;
+}
+.hashMainStoryPostedHashTag-Maroon:hover{
+	color:#c50834;
+}
+
+.hashMainStoryPostedHashTag-Blue{
+	color:#5b28fa;
+}
+.hashMainStoryPostedHashTag-Blue:hover{
+	color:#4822c0;
+}
+
 .hashTotalVoteFlag{
 	background:url(../images/flag.png) no-repeat;
 	width:60px;
@@ -498,6 +616,7 @@ body{
 	vertical-align:middle;
 	font-family:Lato, sans-serif;
 	overflow:hidden;
+	cursor:default;
 }
 
 .hashTotalVoteFlag:hover{
@@ -513,26 +632,72 @@ body{
 	cursor:pointer;
 }
 
-.hashMainHashTagPostBox{
+.hashBreadcrumbLink{
+	background:none;
+	margin-bottom:0px;
+}
+
+.hashBreadcrumbBox{
+	display:inline;
 	padding-left:30px;
-	padding-right:30px;
+	padding-right:0px;
 	
+}
+
+.hashMainHashTagPostBox{
+	margin-left:30px;
+	box-shadow:none;	
+	border:none;
+	border-style:none;
+	border-width:0px;
 }
 
 .hashMainStoryMetadataHashtag{
 	padding-left:30px;
 	padding-right:30px;
-	height:50px;
+	margin-bottom:30px;
 
 }
 
 .hashMainHashTagPost{
-
-	border-radius:0;
+	margin-right:15px;
+	border-radius:0px;
+	
 }
 
 .hashMainHashTagPost:focus{
 	box-shadow:none ;
 	-moz-box-shadow: none ;
-	-webkit-box-shadow:none ;
+	-webkit-box-shadow:none;
+	border-color:#9c9c9c;
+}
+
+.hashMainPromoteText{
+	margin-left:30px;
+	text-align:left;
+	width:auto;
+	/*
+	color:#126ed6; */
+	color:#111;
+	font-family:Calibri, Arial, Verdana;
+	border-style:solid;
+	border-color:#ccc;
+	border-width:0px 0px 1px 0px;
+	cursor:default;
+	
+}
+.hashMainPromoteText:hover{
+	/*color:#064994;*/
+	color:#444;
+}
+
+
+.hashMainTagPostSubmitButton{
+	border-radius:0px;
+}
+
+.hashPageFooter{
+	position:relative;
+	bottom:0px;	
+
 }
