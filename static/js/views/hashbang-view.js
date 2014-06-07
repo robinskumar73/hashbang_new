@@ -9,12 +9,11 @@ var app = app || {};
 app.Views = app.Views || {};
 
 //Now creating a views structure for VOTES FLAG 
-
 app.Views.votesFlag = Backbone.View.extend({
 	
 	VotesTemplate: _.template($("#hashbang-votesFlag").html()),
 	
-
+	
 	events: {
 	  //Event for thumb-up
       "click h4.glyphicon-thumbs-up.hashMainVotesThumb"   : "handleVoteUp",
@@ -22,11 +21,10 @@ app.Views.votesFlag = Backbone.View.extend({
     },
 	
 	//Now listen to change...
-	initialize: function() {
-      this.listenTo(this.model, 'change', this.render);
-	  
+	initialize: function( ) {
+	  this.listenTo(this.model, 'change', this.changeValue);
     },
-
+	
 	
 	//Events code for votes UP
 	handleVoteUp: function(){
@@ -48,16 +46,23 @@ app.Views.votesFlag = Backbone.View.extend({
 		
 	},
 	
+	changeValue: function(){
+		//Only updating the html content containing..votes value..
+		$($(this.$el).children()[2]).html( this.model.get('totalVotes') );
+		
+	},
+	
 	render: function(){
 		
+		this.$el.html('');
 		//Logging
-		console.log("Rendering the vote template.... Current vote is " + this.model.get('totalVotes') + " and Story Id is " + this.model.parent.get('storyId'));
+		console.log("Rendering the vote template....");
 		
-		this.$el.append(this.VotesTemplate(this.model.toJSON()));
+		this.$el.append( this.VotesTemplate(this.model.toJSON()));
 		return this;
 	}
 	
-});
+}); 
 
 
 //Creating a view for trendingTags
@@ -87,6 +92,8 @@ app.Views.trendingTags = Backbone.View.extend({
 //Creating a view for NavLink..
 app.Views.navLink = Backbone.View.extend({
 	
+	tagName:'li',
+	
 	navLinkTemplate: _.template( $("#hashbang-navLink").html() ),
 	
 	events: {
@@ -98,11 +105,15 @@ app.Views.navLink = Backbone.View.extend({
 	handleClick: function(e){
 		
 		e.preventDefault();
-		console.log("nav link " + this.model.navTitle + " has been clicked");
+		console.log("nav link " + this.model.get('navTitle') + " has been clicked");
 	},
 	
 	render: function(){
-		this.$el.append( this.navLinkTemplate( this.model.toJSON() ));	
+		if(this.model.get('active'))
+		{
+			$(this.$el).addClass('active');
+		}
+		$(this.$el).append( this.navLinkTemplate( this.model.toJSON() ));	
 		return this;
 	}
 	
@@ -116,11 +127,10 @@ app.Views.navLinkList  = Backbone.View.extend ({
 	className: 'col-md-10 hashBreadcrumbBox',
 	
 	initialize: function(){
-			this.listenTo(NavLinkList,'add', this.addOne);
-			this.listenTo(NavLinkList,'reset', this.resetLink);
-			this.listenTo(NavLinkList,'remove', this.resetLink);
-			//Now fetching from database...
-			NavLinkList.fetch();
+			this.listenTo(this.collection,'add', this.addOne);
+			this.listenTo(this.collection,'reset', this.resetLink);
+			this.listenTo(this.collection,'remove', this.resetLink);
+			
 			this.orderedList = $("<ol class='col-md-12 breadcrumb hashBreadcrumbLink' />");
 			this.$el.append(this.orderedList);
 	},
@@ -133,7 +143,7 @@ app.Views.navLinkList  = Backbone.View.extend ({
 	//Adding all data once again and also during initialization...
 	resetLink : function(){
 		this.orderedList.html('');
-		NavLinkList.each( this.addOne, this );
+		this.collection.each( this.addOne, this );
 	},
 	
 	render: function(){
@@ -147,6 +157,9 @@ app.Views.navLinkList  = Backbone.View.extend ({
 //Creating a view for postedHashtag..
 app.Views.postedHashTag = Backbone.View.extend({
 	
+	//Defining an arbitrary tag to support inline
+	tagName:'span',
+	
 	postedHashTagTemplate: _.template( $("#hashbang-postedTag").html() ),
 	
 	events: {
@@ -157,11 +170,11 @@ app.Views.postedHashTag = Backbone.View.extend({
 	//Handling clicked event..
 	handleClick: function(e){
 			e.preventDefault();
-			console.log("posted hashtag has been clicked.. tag name " + this.model.tagName );
+			console.log("posted hashtag has been clicked.. tag name " + this.model.get('tagName') );
 	},
 	
 	render: function(){
-		this.$el.append( this.postedHashTagTemplate( this.model.toJSON() ));
+		this.$el.append(this.postedHashTagTemplate( this.model.toJSON() ));
 		return this;
 	}
 
@@ -170,15 +183,16 @@ app.Views.postedHashTag = Backbone.View.extend({
 //Creating a view for postedHashtagList..
 app.Views.postedHashTagList = Backbone.View.extend({
 	
-	postedHashTagListTemplate: _.template( $("#hashbang-postedTagList").html() ),
+	tagName: 'div',
 	
-	initialize: function(){
-		this.listenTo(PostedHashTagList,'add', this.addOne);
-		this.listenTo(PostedHashTagList,'reset', this.resetLink);
-		this.listenTo(PostedHashTagList,'remove', this.resetLink);
+	className: 'col-md-12 hashMainStoryMetadataHashtag',
+	
+	initialize: function( ){
+		this.listenTo(this.collection,'add', this.addOne);
+		this.listenTo(this.collection,'reset', this.resetLink);
+		this.listenTo(this.collection,'remove', this.resetLink);
 		
-		//Now fetching from database...
-		PostedHashTagList.fetch();
+		
 	},
 	
 	//Add one model...
@@ -191,54 +205,20 @@ app.Views.postedHashTagList = Backbone.View.extend({
 	resetLink: function(){
 		//Clearing the el element object for initializing...
 		this.$el.html('');
-		PostedHashTagList.each( this.addOne, this );
+		this.collection.each( this.addOne, this );
 	},
 	
 	render: function(){
 		this.resetLink();
 		return this;		
 	}
-	
-	
-	
+		
 });
 
 
 
-//Creating a View for stories.....
-app.Views.stories = Backbone.View.extend({
-
-
-
-/*
-
-<!-- Template for mainstoryhashtag -->
-
-
-<!-- Template for hashMainStoryMetadata -->    
-<script id="hashbang-hashMainStoryMetadata" type="text/template">
-	<div class="col-md-12 hashMainStoryMetadata">
-    	<!--<h4 class="col-md-12 glyphicon glyphicon-thumbs-up hashMainVotesThumb"></h4> -->
-        <!--AREA FOR NAV LINK-->
-        <!-- NAV LINK AREA ENDS-->
-        <!--<div class="col-md-2 hashTotalVoteFlag">1000</div> --> 
-        <!--<h4 class="col-md-12 glyphicon glyphicon-thumbs-down hashMainVotesThumb"></h4> -->
-        <h4 class="col-md-12 text-danger hashMainPromoteText">Click to promote tags</h4>
-        <!--POSTED HASHTAG AREA-->        
-       	<div class="row">
-        	<div class="col-lg-11 hashMainHashTagPostBox" >
-    			<div class="input-group">
-      				<input type="text" class="form-control hashMainHashTagPost" placeholder="Post #Tag">
-      				<span class="input-group-btn hashMainTagPostSubmitButtonGroup">
-        				<button class="btn btn-default hashMainTagPostSubmitButton" type="button">Go!</button>
-      				</span>
-    			</div> <!--input-group div ends -->
-  			</div> <!-- col-lg-6 -->
-		</div><!-- row -->       
-    </div><!--DIV ENDS FOR HASH-MAIN-STORY-METADATA-->
-</script>
-    
-	*/
+//Creating a View for Main Story.....
+app.Views.MainStory = Backbone.View.extend({
 	
 	tagName: 'div',
 	
@@ -248,18 +228,34 @@ app.Views.stories = Backbone.View.extend({
 	
 	hashMainStoryHashTagTemplate : _.template( $("#hashbang-hashMainStoryHashTag").html() ),
 	
-	hashMainStoryMetadataTemplate : _.template( $("#hashbang-hashMainStoryMetadata").html() ),
-	
 	initialize: function(){
 		
-		//fetch all the stories child element models and collections necessary for creating stories.....
-		this.model.navLink.fetch();
-		this.model.votesFlag.fetch();
 		this.model.hashTagMain.fetch();
-		this.model.postedHashTag.fetch();
+		//Creating heading tag for story..
+		this.storyHeading = $("<h3 class='col-md-12  hashStoryMainHeading' />");
+		//Creating story paragraph..
+		this.storyContent = $("<p class='col-md-12 hashMainStoryParagraph' />");
 		
-		
-		
+	},
+	
+	
+	events: {
+		//Event for thumb-up
+      	"click span.glyphicon.glyphicon-bookmark.shadow.h5.hashBookMarkBox" : "handleBookmarkClick",
+		"click span.glyphicon.glyphicon-star.shadow.h5.hashBookMarkBox" : "handleFavourateButtonClick",
+		"click span.glyphicon.glyphicon-fullscreen.shadow.h5.hashBookMarkBox" : "handleFullScreenClick"
+    },
+	
+	handleBookmarkClick: function(e){
+		console.log("Bookmark button has been clicked..");
+	},
+	
+	handleFavourateButtonClick: function(e){
+		console.log("Favourate button has been clicked..");	
+	},
+	
+	handleFullScreenClick: function(e){
+		console.log("handle full screen button click..")
 	},
 	
 	render: function(){
@@ -270,9 +266,75 @@ app.Views.stories = Backbone.View.extend({
 		//Now adding main story hashTag..
 		this.$el.append( this.hashMainStoryHashTagTemplate( this.model.hashTagMain.toJSON() ));
 		//Now adding heading to the template..
-		this.$el.append(  );
-		
+		this.$el.append( this.storyHeading.html( this.model.get('storyTitle') ));
+		//Now adding the story content paragraph..
+		this.$el.append( this.storyContent.html( this.model.get('storyContent') ));
+		return this;
 	}
 	
 	
 });
+
+//Creating a view for story metadata..
+app.Views.MainStoryMetadata = Backbone.View.extend({	
+
+	hashMainStoryMetadataTemplate : _.template( $("#hashbang-hashMainStoryMetadata").html() ),
+
+	//Defigning tag for metadata template..
+	tagName: 'div',
+	
+	className: 'col-md-12 hashMainStoryMetadata',
+	
+	initialize: function(){
+		//Creating object for views...
+		this.votesFlagView = new app.Views.votesFlag({ model: this.model.votesFlag });
+		//Initializing the collection view for navLinkList..
+		this.navLinkView = new app.Views.navLinkList({ collection : this.model.navLink });
+		//Initializing the collection view for postedHashTag..
+		this.postedHashTagView = new app.Views.postedHashTagList( {collection: this.model.postedHashTag });
+		this.containerDiv = $("<div/>");
+		//Adding jquery object to template..
+		this.metadataTemplate = $( this.hashMainStoryMetadataTemplate() );
+		//Now appending this metadataTemplate to container Div
+		this.containerDiv.append(this.metadataTemplate);
+		
+		//fetching all the metadata child element models and collections necessary for creating stories' metadata.....
+		//this.model.navLink.fetch();
+		//this.model.votesFlag.fetch();
+		//this.model.postedHashTag.fetch();
+	},
+	
+	render: function(){
+		//First clearing the el
+		this.$el.html('');
+		//First appending the VotesFlag ..
+		this.$el.append( this.votesFlagView.render().el );
+		//Now appending the NavLink... just after the thumbs up html line..
+		$(this.navLinkView.render().el).insertBefore( $($(this.$el).children()[0]).children()[1] );
+		//Now inserting posteHashTagView...
+		$(this.postedHashTagView.render().el).insertBefore(this.containerDiv.children()[1]);
+		//Now finally appending the template...
+		$(this.$el).append( this.containerDiv );
+		return this;
+	}
+	
+	
+});
+
+//Now finally creating story view..
+app.Views.story = Backbone.View.extend({
+	
+	initialize: function(){
+		this.MainStory = new app.Views.MainStory( { model : this.model } ),
+		this.MainStoryMetadata = new app.Views.MainStoryMetadata({ model : this.model }) 
+	},
+	
+	render: function(){
+		this.$el.append( this.MainStory.render().el );
+		this.$el.append( this.MainStoryMetadata.render().el ); 
+		return this;
+	}
+	
+});
+
+

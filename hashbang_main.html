@@ -124,30 +124,23 @@
 
 <!-- Template for mainstoryhashtag -->
 <script type="text/template" id="hashbang-hashMainStoryHashTag">
-	<h5 class="col-md-12 text-muted hashMainStoryHashTag"> <%- tagName %> </h5>
+	<h5 class="col-md-12 text-muted hashMainStoryHashTag"> <%= tagName %> </h5>
 </script>
 
 <!-- Template for hashMainStoryMetadata -->    
 <script id="hashbang-hashMainStoryMetadata" type="text/template">
-	<div class="col-md-12 hashMainStoryMetadata">
-    	<!--<h4 class="col-md-12 glyphicon glyphicon-thumbs-up hashMainVotesThumb"></h4> -->
-        <!--AREA FOR NAV LINK-->
-        <!-- NAV LINK AREA ENDS-->
-        <!--<div class="col-md-2 hashTotalVoteFlag">1000</div> --> 
-        <!--<h4 class="col-md-12 glyphicon glyphicon-thumbs-down hashMainVotesThumb"></h4> -->
-        <h4 class="col-md-12 text-danger hashMainPromoteText">Click to promote tags</h4>
-        <!--POSTED HASHTAG AREA-->        
-       	<div class="row">
-        	<div class="col-lg-11 hashMainHashTagPostBox" >
-    			<div class="input-group">
-      				<input type="text" class="form-control hashMainHashTagPost" placeholder="Post #Tag">
-      				<span class="input-group-btn hashMainTagPostSubmitButtonGroup">
-        				<button class="btn btn-default hashMainTagPostSubmitButton" type="button">Go!</button>
-      				</span>
-    			</div> <!--input-group div ends -->
-  			</div> <!-- col-lg-6 -->
-		</div><!-- row -->       
-    </div><!--DIV ENDS FOR HASH-MAIN-STORY-METADATA-->
+	<h4 class="col-md-12 text-danger hashMainPromoteText">Click to promote tags</h4>
+    <!--POSTED HASHTAG AREA-->        
+    <div class="row">
+    	<div class="col-lg-11 hashMainHashTagPostBox" >
+    		<div class="input-group">
+      			<input type="text" class="form-control hashMainHashTagPost" placeholder="Post #Tag">
+      			<span class="input-group-btn hashMainTagPostSubmitButtonGroup">
+        			<button class="btn btn-default hashMainTagPostSubmitButton" type="button">Go!</button>
+      			</span>
+    		</div> <!--input-group div ends -->
+  		</div> <!-- col-lg-11 -->
+	</div><!-- row -->       
 </script>
     
     
@@ -160,28 +153,19 @@
     
     <!--Template for trending tags-->
     <script type="text/template" id="hashbang-trendingTag">
-    	<li class="hashListItemTrending"> <a href="#/search/tag/<%- hashTagName %>/TagId/<%- tagId %>"> <%- hashTagName %> </a> </li> 
+    	<li class="hashListItemTrending"> <a href="#/search/tag/<%= hashTagName %>/TagId/<%= tagId %>"> <%= hashTagName %> </a> </li> 
 	</script>
 
     <!--Template for  single NavLink-->
     <script type="text/template" id="hashbang-navLink">
-		<li class="<%= active ? 'active' : '' %>" >
-			<a href="#/search/navlink/<%- navTitle %>/id/<%- navId %>" > <%- navTitle %> </a>
-		</li>
+			<a href="#/search/navlink/<%= navTitle %>/id/<%= navId %>" > <%= navTitle %> </a>
     </script>
     
     
     <!--Template for adding postedTag model... -->
     <script type="text/template" id="hashbang-postedTag">
-		<span class=" h5  hashMainStoryPostedHashTag  "> <%- tagName %> </span>
+		<span class=" h5  hashMainStoryPostedHashTag  "> <%= tagName %> </span>
     </script>
-	<!--Template for adding postedTag collection -->
-	<script type="text/template" id="hashbang-postedTagList">
-		<div class="col-md-12 hashMainStoryMetadataHashtag " style="margin-left:5px;">	
-                  
-        </div>
-	</script>
-	
     
 
 		<!-------------------------------------------TEMPLATES AREA ENDS---------------------------------------->

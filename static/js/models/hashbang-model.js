@@ -32,7 +32,7 @@ app.Model.navLink = Backbone.Model.extend({
 //Creating a model for votesFlag
 app.Model.votesFlag = Backbone.Model.extend({
 	defaults:{
-		totalVotes:''
+		totalVotes:'0'
 	}
 });
 

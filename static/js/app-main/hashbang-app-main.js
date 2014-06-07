@@ -55,6 +55,13 @@ app.Main.TrendingList = Backbone.View.extend({
 //Now Initializing the Views...
 var MainTrendingView = new app.Main.TrendingList;
 
+
+
+
+//-----------------------------------------------------TESTING AREA-------------------------------------------------------------
+
+
+
 //Initializing collection...
 var TrendingTagCollection = [
 			
@@ -70,6 +77,33 @@ var TrendingTagCollection = [
 		]
 
 TrendingTagsList.add(TrendingTagCollection);
+
+													
+													
+Modelstory = {
+	storyId:'1',
+	storyTitle: 'Lorem ipsum dolor sit amet, consectetur',
+	storyPosted: 'june-6th-2014',
+	storyContent: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis Lorem ipsum dolor sit amet, consectetur<br><br>Lorem ipsum dolor sit amet, mpor incididunt ut labore et dolore magna aliqua. quis Lorem ipsum dolor sit amet, consectetu<br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut eni<br>' 
+}
+
+
+navLink = [ { navId:'1',navTitle:'Jecrc' },{ navId:'2',navTitle:'C.S.' },{ navId:'3',navTitle:'B-1 Batch',active:true } ]
+
+
+votesFlag = {totalVotes:'5500'}
+
+
+hashTagMain = { tagId:'124', tagName:'#iLoveCricket', currentPromotions:'234520' }
+
+
+postedHashTag = [ { tagId:'212', currentPromotions:'34351', tagName:'#DuniyaKaChutiyapa'},{ tagId:'21242', currentPromotions:'351', tagName:'#Bitches'},{ tagId:'212', currentPromotions:'34351', tagName:'#NoSleep'},{ tagId:'212', currentPromotions:'34351', tagName:'#TheGirlWhoDumpedMe'},{ tagId:'212', currentPromotions:'34351', tagName:'#LoveMyPhone'},{ tagId:'21242', currentPromotions:'351', tagName:'#Bitches'},{ tagId:'212', currentPromotions:'34351', tagName:'#NoSleep'}  ]
+
+
+story = new app.Model.story(Modelstory, navLink, votesFlag, hashTagMain, postedHashTag );
+
+v = new app.Views.story({model:story});
+$("#hashColumn1View").append(v.render().el);
 
 
 

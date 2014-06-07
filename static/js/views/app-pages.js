@@ -8,33 +8,28 @@ app.Pages = app.Pages || {};
 //Now putting all  TrendingTags collection list in a global namespace...
 var TrendingTagsList = new app.Collections.trendingTagsList ;
 
-//Creating object for navLinkList Collections...
-var NavLinkList = new app.Collections.navLinkList;
-
-//Creating an instance for postedHashTagList Collections..
-var PostedHashTagList = new app.Collections.postedHashTagList;
 
 //Creating a Model for storing Stories....
 //Now creating a model for Story
 //And creating its child dependencies and creating its URL and fetching it using LAZY LOADING..
 app.Model.story  = Backbone.Model.extend({
 	
-	initialize:function(){	
+	initialize:function(modelStory, navList, votesFlag, hashTagMain, postedHashTag){	
 		//Storing Navigation Link Collection...
-		this.navLink = NavLinkList;
+		this.navLink = new app.Collections.navLinkList(navList);
 		this.navLink.parent = this;
-		this.navLink.localStorage = new Backbone.LocalStorage("hashbang-"+ this.get('storyId') + "-navLink" );
+		this.navLink.localStorage = new Backbone.LocalStorage("hashbang-"+ this.id() + "-navLink" );
 		
-		this.votesFlag = new app.Model.votesFlag();
-		this.votesFlag.localStorage = Backbone.LocalStorage("hashbang-"+ this.get('storyId') + "-votesFlag" );
+		this.votesFlag = new app.Model.votesFlag(votesFlag);
+		this.votesFlag.localStorage = new Backbone.LocalStorage("hashbang-"+ this.id() + "-votesFlag" );
 		this.votesFlag.parent = this;
 		
-		this.hashTagMain = new app.Model.hashTagMain();
-		this.votesFlag.localStorage = Backbone.LocalStorage("hashbang-"+ this.get('storyId') + "-hashTagMain" );
+		this.hashTagMain = new app.Model.hashTagMain(hashTagMain);
+		this.hashTagMain.localStorage = new Backbone.LocalStorage("hashbang-"+ this.id() + "-hashTagMain" );
 		this.hashTagMain.parent = this;
 		
-		this.postedHashTag = PostedHashTagList;
-		this.postedHashTag.localStorage = Backbone.LocalStorage("hashbang-"+ this.get('storyId') + "-postedHashTag" );
+		this.postedHashTag = new app.Collections.postedHashTagList(postedHashTag);
+		this.postedHashTag.localStorage = new Backbone.LocalStorage("hashbang-"+ this.id() + "-postedHashTag" );
 		this.postedHashTag.parent = this; 
 	},
 	
@@ -43,7 +38,9 @@ app.Model.story  = Backbone.Model.extend({
 		storyTitle:'',
 		storyPosted:'',
 		storyContent:''
-	}
+	},
+	
+	id: function(){ return this.get('storyId')}
 
 });
 
@@ -136,6 +133,12 @@ app.Pages = {
 		//Clearing the emptyContainerElementObj 
 		$(emptyContainerElementObj).html('');
 		
+		//Varible needed for defigning tags...
+		var tag='';
+		var startTagInProgress = false;
+		var closeTagInProgress = false;
+		var tagCounter = 0;
+		
 		//First append the empty container element to ParentContainer...
 		$( ParentContainerObj ).append( emptyContainerElementObj );
 		//Now checking if it stills causes overflow...
@@ -143,6 +146,56 @@ app.Pages = {
 		{
 			for( var i=0; i<textLength  ; i++)
 			{	
+			
+				if( textString[i] === '<' && !startTagInProgress && !closeTagInProgress )
+				{
+					if( textString[i+1] === '/')
+					{
+						closeTagInProgress = true;	
+					}
+					else
+					{
+						startTagInProgress = true;
+					}
+					//start collecting that tag ..
+					tag = '<';
+					
+					//Increment the tag counter..
+					tagCounter = 1;
+				}
+				
+				if(startTagInProgress || closeTagInProgress )
+				{
+					//Collect that tag...
+					tag = tag + textString[i];
+					
+					//Ignore the tag if counter crosses 7
+					if(tagCounter > 8)
+					{
+						startTagInProgress = false;
+						closeTagInProgress = false;
+						tag = '';
+						tagCounter=0;
+					}
+					
+					//Increment the tag counter..
+					tagCounter = tagCounter + 1;
+				}
+				
+				if ( textString[i] === '>' && (startTagInProgress || closeTagInProgress ) )
+				{
+					tag = tag + '>';
+					//Stop the action of both tags..
+					startTagInProgress = false;
+					closeTagInProgress = false;
+					tagCounter=0;
+					
+				}
+				
+				
+				
+				
+				
 				if( !this.OverflowY(ParentContainerObj) )
 				{
 					$(emptyContainerElementObj).html(textString.slice(0,i));
