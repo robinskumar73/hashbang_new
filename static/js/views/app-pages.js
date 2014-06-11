@@ -71,7 +71,7 @@ app.Pages = {
 	//Now calculating if the element has overflow vertical  content returns boolean....
 	OverflowY: function(parentObj){
 		
-		if(parentObj.offsetHeight < parent.scrollHeight){
+		if(parentObj.offsetHeight < parentObj.scrollHeight){
 			//Return true if overflow occurs
 			return true;
 		}
@@ -84,7 +84,7 @@ app.Pages = {
 	//Now calculating if the element has horizental overflow content returns boolean....
 	OverflowX: function(parentObj){
 		
-		if(parentObj.offsetWidth < parent.scrollWidth){
+		if(parentObj.offsetWidth < parentObj.scrollWidth){
 			return true;
 		}
 		else{
@@ -95,6 +95,7 @@ app.Pages = {
 	//Now calculating the vertical overflow elements returns array and remove overflow elements if set true..
 	calculateYOverflow : function(elementObj, removeOverflowElement){	
 		removeOverflowElement = removeOverflowElement || false;
+		
 		var invisibleItems = new Array();
 		for(var i=0; i<elementObj.childElementCount; i++ ){
 			if( elementObj.children[i].offsetTop + elementObj.children[i].offsetHeight > elementObj.offsetTop + elementObj.offsetHeight )	{
@@ -146,7 +147,7 @@ app.Pages = {
 		{
 			for( var i=0; i<textLength  ; i++)
 			{	
-			
+				console.log("I am here..");
 				if( textString[i] === '<' && !startTagInProgress && !closeTagInProgress )
 				{
 					if( textString[i+1] === '/')
@@ -158,39 +159,44 @@ app.Pages = {
 						startTagInProgress = true;
 					}
 					//start collecting that tag ..
-					tag = '<';
+					tag = '';
 					
 					//Increment the tag counter..
 					tagCounter = 1;
 				}
 				
-				if(startTagInProgress || closeTagInProgress )
+				else(startTagInProgress || closeTagInProgress )
 				{
-					//Collect that tag...
-					tag = tag + textString[i];
-					
-					//Ignore the tag if counter crosses 7
-					if(tagCounter > 8)
+					if ( textString[i] === '>')
 					{
+						tag = tag + '>';
+						//Stop the action of both tags..
 						startTagInProgress = false;
 						closeTagInProgress = false;
-						tag = '';
 						tagCounter=0;
+						console.log("tag found"+ tag);
+					
+					}
+					else{
+						//Collect that tag...
+						tag = tag + textString[i];
+					
+						//Ignore the tag if counter crosses 7
+						if(tagCounter > 8)
+						{
+							startTagInProgress = false;
+							closeTagInProgress = false;
+							tag = '';
+							tagCounter=0;
+						}
+					
+						//Increment the tag counter..
+						tagCounter = tagCounter + 1;
 					}
 					
-					//Increment the tag counter..
-					tagCounter = tagCounter + 1;
 				}
 				
-				if ( textString[i] === '>' && (startTagInProgress || closeTagInProgress ) )
-				{
-					tag = tag + '>';
-					//Stop the action of both tags..
-					startTagInProgress = false;
-					closeTagInProgress = false;
-					tagCounter=0;
-					
-				}
+				
 				
 				
 				
@@ -203,14 +209,14 @@ app.Pages = {
 				else
 				{
 					$(emptyContainerElementObj).html('');
-					ParentContainerObj.remove( emptyContainerElementObj );
+					$(ParentContainerObj).remove( emptyContainerElementObj );
 					return [ textString.slice(0, i-1), textString.slice(i-1, textLength) ];
 				}
 			}
 		}
 		else
 		{
-			ParentContainerObj.remove( emptyContainerElementObj );
+			$(ParentContainerObj).remove( emptyContainerElementObj );
 			return false;
 		}
 		

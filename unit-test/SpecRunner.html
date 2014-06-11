@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Jasmine Test Runner</title>
+  <link rel="stylesheet" type="text/css" href="lib/jasmine-1.0.0/jasmine.css">
+  <script type="text/javascript" src="lib/jasmine-1.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="lib/jasmine-1.0.0/jasmine-html.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="../static/jquery/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="../static/bootstrap/js/bootstrap.js"></script>
+  <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+ <script type="text/javascript" src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
+ <script type="text/javascript" src="../static/js/Backbone.localStorage-master/backbone.localStorage-min.js"></script>                      
+ <script type="text/javascript" src="../static/js/models/hashbang-model.js"></script>
+ <script type="text/javascript" src="../static/js/collections/hashbang-collection.js"></script>
+ <script type="text/javascript" src="../static/js/views/app-pages.js"></script>
+ <script type="text/javascript" src="../static/js/views/hashbang-view.js"></script>
+ <script type="text/javascript" src="../static/js/routers/hashbang-routers.js"></script>
+ <script type="text/javascript" src="../static/js/app-main/hashbang-app-main.js"></script> 
+
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="spec/ModelCheck.js"></script>
+  <script src="spec/CollectionCheck.js"></script> 
+  <script src="spec/app-pageCheck.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+  jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+  jasmine.getEnv().execute();
+</script>
+<div id="tester">
+</div>
+</body>
+</html>
