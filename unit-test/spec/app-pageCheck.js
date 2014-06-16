@@ -137,20 +137,45 @@ describe("Testing Create Page Function..", function(){
 			myWindow.close();
 		});
 		
+		
+		var  text =	"sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmbbbmzxzxxxxxxxxxxxaszabcdssss s sfsfasfsalkn jdasfjksjfk kskalfdsk" ;
+
+		var text2 = "<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do <b>eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis Lorem ipsum dolor sit amet, consectetur<br></b></span><br><span>Lorem <b>ipsum dolor sit amet, cor  &lt;script&gt;adipisicing elit <br> &amp;, sed do </b> eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis Lorem ipsum dolor sit amet, consectetur<br></span><br><span><b>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis Lorem ipsum dolor sit amet, consectetur<br></span><br><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</b> quis Lorem ipsum dolor sit amet, consectetur</span><br>";
+
+		var child = $('<p>');
+
+		var parent = $('<div style="width:200px;height:200px;word-wrap:break-word;border:solid;" id="parent" >');
+
+		
+		
 		it("Split Test function checking..", function(){
-			
-			var parent = $("<div id='parent' style='height:230px;width:200px;border:solid;'>");
-			var child1 =  $("<p style='width:190px;border:solid;'>Hey i am non overflow element</p>");
-			
-			//child1.html(text);
-			var child2 = $("<p style='width:200px;border:solid;'>HEy i am overflow</p>");	
+			//Note: The split check still has fault for checking very large text.... and it shows vertical overflow ...test it by trying "text" variable..
+			//Testing split text......
 			var myWindow = window.open("", "Testing Window", "width=500, height=600");
-			$(myWindow.document.body).append(parent);	
+			$(myWindow.document.body).append(parent);
 			var parent1 = myWindow.document.getElementById("parent");
+			var page = app.Pages;
+			//First appending the text then checking its overflow..
+			$(parent1).append(child);
+			child.append(text2);
 			
-			test.return_text = app.Pages.splitText(text, child1, parent1);
+			//Now checking overflow...
+			expect( page.OverflowY( parent1 )).toBe(true);
+			//Now empty child and parent..
+			child.empty();
+			$(parent1).empty();
+			page.splitText( text2, child, parent1 );
+			expect( page.OverflowY( parent1 )).toBe(false);
 			
-			
+			child.empty();
+			$(parent1).empty();
+			//Checking for tag..
+			var text3 = "<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do <b>eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis Lorem ipsum dolor sit msdj jsndj jsfjkf sjadj hsbdh js hasdhg hasdyg hadgg hsdhgsahy shdgayo robins skfjks jsdhuj usduak robi";
+			var newText = page.splitText( text3, child, parent1 );
+			if(newText.length)
+			{
+				expect(newText[0].slice(newText[0].length-7)).toBe('</span>');
+			}
 		})
 		
 

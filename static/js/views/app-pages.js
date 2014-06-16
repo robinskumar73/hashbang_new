@@ -129,97 +129,231 @@ app.Pages = {
 	
 	//Now writing code for splitting a text...
 	//First remove that child obj(element) from parent container which you want to break...
-	splitText: function(textString, emptyContainerElementObj, ParentContainerObj){
+	splitText: function(textString, overflowElementObj, ParentContainerObj){
 		var textLength = textString.length;
-		//Clearing the emptyContainerElementObj 
-		$(emptyContainerElementObj).html('');
-		
-		//Varible needed for defigning tags...
-		var tag='';
-		var startTagInProgress = false;
-		var closeTagInProgress = false;
-		var tagCounter = 0;
-		
-		//First append the empty container element to ParentContainer...
-		$( ParentContainerObj ).append( emptyContainerElementObj );
-		//Now checking if it stills causes overflow...
-		if ( !this.OverflowY(ParentContainerObj) )
+		var tag = '', escapeWord = '' ;
+		var htmlEscapeProcessing = false, startTagFlag = false ,stopTagFlag = false, wordProcessing = false;
+		var tagCounter = 0, escCounter = 0, wordCounter = 0;
+		var stackArray = new Array();
+		$(overflowElementObj).empty();
+		$(ParentContainerObj).append(overflowElementObj);
+		if(this.OverflowY(ParentContainerObj) === false)
 		{
-			for( var i=0; i<textLength  ; i++)
-			{	
-				console.log("I am here..");
-				if( textString[i] === '<' && !startTagInProgress && !closeTagInProgress )
+			for( var i=0; i<textLength; i++ )
+			{
+				if(textString[i] === '<' && (startTagFlag === false && stopTagFlag === false ))
 				{
-					if( textString[i+1] === '/')
+					if(textString[i+1] === '/')
 					{
-						closeTagInProgress = true;	
+						stopTagFlag = true;
 					}
 					else
 					{
-						startTagInProgress = true;
+						startTagFlag = true;
 					}
-					//start collecting that tag ..
-					tag = '';
-					
-					//Increment the tag counter..
-					tagCounter = 1;
+					tag = '<';
+					tagCounter++;
 				}
-				
-				else(startTagInProgress || closeTagInProgress )
+				else if( startTagFlag  ||  stopTagFlag )
 				{
-					if ( textString[i] === '>')
+					if(textString[i] === '>')
 					{
 						tag = tag + '>';
-						//Stop the action of both tags..
-						startTagInProgress = false;
-						closeTagInProgress = false;
-						tagCounter=0;
-						console.log("tag found"+ tag);
-					
-					}
-					else{
-						//Collect that tag...
-						tag = tag + textString[i];
-					
-						//Ignore the tag if counter crosses 7
-						if(tagCounter > 8)
+						tagCounter++;
+						
+
+						
+						if(tag === '<br>' || tag === '</br>')
 						{
-							startTagInProgress = false;
-							closeTagInProgress = false;
-							tag = '';
-							tagCounter=0;
+							//Ignore dont push..
 						}
-					
-						//Increment the tag counter..
-						tagCounter = tagCounter + 1;
+						else if( startTagFlag )
+						{
+							stackArray.push(tag);
+						}
+						else if( stopTagFlag )
+						{
+							while(stackArray.length > 0)
+							{
+								//Popping out elements from an  Array..
+								var tagValue = stackArray.pop();
+								if ( tagValue === tag )
+								{
+									break;	
+								}
+								
+							}//End of while loop..
+							
+							
+							 	
+						}
+						
+						else{ /*Do nothing*/ }
+						
+						//Resetting all flags..
+						tagCounter = 0;
+						stopTagFlag = false;
+						startTagFlag = false;
+						tag = '';	
+					}//End of if statement..
+					else 
+					{
+						if(tagCounter>8)
+						{
+							tagCounter = 0;
+							stopTagFlag = false;
+							startTagFlag = false;
+							tag = '';	
+						}
+						else
+						{
+							tag = tag + textString[i];
+						}
+						
 					}
 					
-				}
-				
-				
-				
-				
-				
-				
-				
-				if( !this.OverflowY(ParentContainerObj) )
+				} //else if of (startTagFlag  ||  stopTagFlag) ends..
+				else if( textString[i] === '&' && htmlEscapeProcessing === false && !textString[i] === ' ' )
 				{
-					$(emptyContainerElementObj).html(textString.slice(0,i));
+					htmlEscapeProcessing = true;
+					escapeWord = '&';
+					escCounter++;
+					
 				}
-				else
+				else if ( htmlEscapeProcessing )
 				{
-					$(emptyContainerElementObj).html('');
-					$(ParentContainerObj).remove( emptyContainerElementObj );
-					return [ textString.slice(0, i-1), textString.slice(i-1, textLength) ];
+					escapeWord = escapeWord + textString[i] ;
+					escCounter++;
+					if( escCounter > 8 || textString[i] === ';' )
+					{
+						htmlEscapeProcessing = false;
+						escCounter = 0;
+						escapeWord = '';
+					}
+					
+				
 				}
-			}
-		}
-		else
-		{
-			$(ParentContainerObj).remove( emptyContainerElementObj );
-			return false;
+				//Now checking for word processing..
+				else 
+				{
+					
+					if(wordProcessing === false)
+					{
+						
+						if ( !(textString[i] === ' ') )
+						{
+							
+							wordProcessing = true;
+							wordCounter = 1;
+						}
+					}
+					else if( wordProcessing )
+					{
+						
+						if ( textString[i] === ' ' )
+						{
+							wordProcessing = false;
+							wordCounter = 0;
+						}
+						else
+						{
+							wordCounter++;
+						}
+					}
+					else { /*Do nothing */ }
+				}
+				//Now append the text..
+				if( !htmlEscapeProcessing && !wordProcessing && !startTagFlag && !startTagFlag )
+				{
+					//Now appending text to parent container...
+					$(overflowElementObj).html( textString.slice(0,i) );
+				}
+				//Now checking for overflow....
+				if( this.OverflowY(ParentContainerObj))
+				{
+					
+					console.log("I am here inside last checking for overflow..");
+					//Now check if any checking for tags or htmlescape is still in progress...
+					if( stopTagFlag || startTagFlag )
+					{
+						
+						//Decreasing its value..
+						i = i - tag.length;
+						
+					}
+					else if( htmlEscapeProcessing  )
+					{
+						
+						i = i - escapeWord.length;
+					}
+					else
+					{
+						
+						if( wordProcessing )
+						{
+							
+							i =  i - wordCounter;
+							
+						}
+					}
+					
+					console.log("I am in splitText");
+					//Forming the split Text  
+					var newText = textString.slice(0,i);
+					
+					//Now creating the nonOverlapping form of text...
+					var newPosition = newText.search(/(\s)\S*$/);
+					if( newPosition != -1)
+					{
+						i = newPosition;
+						//Now getting exact NonOverlapped value..
+						newText = textString.slice(0,i);
+						console.log("i position "+i);
+					}
+					var remText = textString.slice(i);
+					console.log(stackArray.length);
+					
+					//Now checking the stack array value..
+					if( stackArray.length )
+					{
+						console.log("Inside stack array length");
+						while(stackArray.length)
+						{
+							 //console.log("Inside stack array length loop");
+							 var tagElement = stackArray.pop();
+							 //console.log("popped tag value "+tagElement);
+							 var closeTagElement = 	this.convertCloseTag( tagElement );
+							 newText = newText + closeTagElement ;
+							 remText = tagElement + remText;
+						}
+					}
+					
+					
+					
+					//Finally putting value..
+					//Now appending text to parent container...
+					$(overflowElementObj).html( newText );
+					
+					//Clearing the containers element..
+					//$(ParentContainerObj).remove( $( $(ParentContainerObj).children() ).last() );
+					//$( overflowElementObj ).empty();
+					
+					
+					return ([newText, remText]);
+				}
+				
+				
+			} //For loop ends..
+			//if it reaches outside for loop means...no text overflow is found.....
+			$(overflowElementObj).html( textString );
+			return ([]);
 		}
 		
+	//SplitText function ends..	
+	},
+	
+	convertCloseTag: function(tag){
+		return '</' + tag.slice(1);
 	}
 }
 		

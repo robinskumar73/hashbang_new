@@ -106,5 +106,3 @@ v = new app.Views.story({model:story});
 $("#hashColumn1View").append(v.render().el);
 
 
-
-
