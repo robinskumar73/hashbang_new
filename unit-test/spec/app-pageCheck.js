@@ -176,6 +176,7 @@ describe("Testing Create Page Function..", function(){
 			{
 				expect(newText[0].slice(newText[0].length-7)).toBe('</span>');
 			}
+			myWindow.close();
 		})
 		
 

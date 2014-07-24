@@ -25,6 +25,7 @@ body{
 }
 
 
+
 @font-face{
 	font-family:Lato;
 	src:url(../bootstrap/fonts/Lato/Lato-Regular.ttf);
@@ -119,7 +120,8 @@ body{
 
 .logo{
 
-	font-family:"Nueva Std Cond";
+	
+	font-family: BradburySans-Light ; 
 	padding-top:30px;
 	font-size:35px;
 	text-align:center;

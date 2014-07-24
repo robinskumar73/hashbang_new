@@ -272,7 +272,7 @@ app.Pages = {
 				if( this.OverflowY(ParentContainerObj))
 				{
 					
-					console.log("I am here inside last checking for overflow..");
+					//console.log("I am here inside last checking for overflow..");
 					//Now check if any checking for tags or htmlescape is still in progress...
 					if( stopTagFlag || startTagFlag )
 					{
@@ -297,7 +297,7 @@ app.Pages = {
 						}
 					}
 					
-					console.log("I am in splitText");
+					//console.log("I am in splitText");
 					//Forming the split Text  
 					var newText = textString.slice(0,i);
 					
@@ -308,15 +308,15 @@ app.Pages = {
 						i = newPosition;
 						//Now getting exact NonOverlapped value..
 						newText = textString.slice(0,i);
-						console.log("i position "+i);
+						//console.log("i position "+i);
 					}
 					var remText = textString.slice(i);
-					console.log(stackArray.length);
+					//console.log(stackArray.length);
 					
 					//Now checking the stack array value..
 					if( stackArray.length )
 					{
-						console.log("Inside stack array length");
+						//console.log("Inside stack array length");
 						while(stackArray.length)
 						{
 							 //console.log("Inside stack array length loop");
