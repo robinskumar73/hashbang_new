@@ -11,13 +11,10 @@ app.Views = app.Views || {};
 //Now creating a views structure for VOTES FLAG 
 app.Views.votesFlag = Backbone.View.extend({
 	
-    VotesTemplate: _.template($("#hashbang-votesFlag").html()),
-	
-    tagName: 'div',
-    className: 'nav-data',
+	VotesTemplate: _.template($("#hashbang-votesFlag").html()),
 	
 	
-    events: {
+	events: {
 	  //Event for thumb-up
       "click h4.glyphicon-thumbs-up.hashMainVotesThumb"   : "handleVoteUp",
       "click h4.glyphicon-thumbs-down.hashMainVotesThumb"  : "handleVoteDown"
@@ -295,7 +292,7 @@ app.Views.MainStoryMetadata = Backbone.View.extend({
 		this.navLinkView = new app.Views.navLinkList({ collection : this.model.navLink });
 		//Initializing the collection view for postedHashTag..
 		this.postedHashTagView = new app.Views.postedHashTagList( {collection: this.model.postedHashTag });
-		this.containerDiv = $("<div class='tag-data' >");
+		this.containerDiv = $("<div/>");
 		//Adding jquery object to template..
 		this.metadataTemplate = $( this.hashMainStoryMetadataTemplate() );
 		//Now appending this metadataTemplate to container Div

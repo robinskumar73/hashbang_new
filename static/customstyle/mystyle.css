@@ -219,7 +219,7 @@ body{
 .hashTrendingListHeadingColorBox{
 	width:7px;
 	height:7px;
-	background:#f61e4c;
+	background:#F00;
 	display:inline-block;
 	vertical-align:middle;
 	margin-left:70px;
@@ -229,7 +229,7 @@ body{
 
 
 .hashTrendingHeading:hover div.hashTrendingListHeadingColorBox{
-	background:#b30b2e;
+	background:#EF410E;
 }
 
 
@@ -463,8 +463,7 @@ body{
 }
 
 .hashMainStory{
-	padding-left:30px;
-	padding-right:30px;
+	
 }
 
 .hashMainHalfStory{
@@ -475,8 +474,7 @@ body{
 @media (min-width: 768px) {
 	
 .hashMainHalfStory{
-	padding-left:30px;
-	padding-right:30px;
+	
 	width:477px;
 	text-align:justify;
 
@@ -487,6 +485,7 @@ body{
 
 	padding-right:0px;
 	overflow-x:hidden;
+	
 }
 
 .hashStoryMainHeading{
@@ -655,6 +654,7 @@ body{
 	border:none;
 	border-style:none;
 	border-width:0px;
+	padding-bottom:40px;
 }
 
 .hashMainStoryMetadataHashtag{

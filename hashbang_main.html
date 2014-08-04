@@ -81,14 +81,12 @@
             	<div class="row">
                 <!-----------------------DIVISION AREA FOR COLUMN-1----------------------------------->
                 	<div id="hashColumn1View" class="col-xs-12 col-md-5 hashMainColumn">
-                    	
                         <!--Space for Column-2-->
                         
                     </div>
                    
          		<!---------------------------DIVISION AREA FOR COLUMN-2----------------------------------------->
                    <div id="hashColumn2View" class="col-xs-12 col-md-5 hashMainColumn">
-                 		
                         <!--Space for Column-2-->
                          
                    </div>
@@ -96,7 +94,12 @@
                    
           		<!---------------------------DIVISION AREA FOR HALFCOLUMN----------------------------------------->
                    <div id="hashHalfColumnView" class="col-xs-12 col-md-2 hashMainHalfColumn">
-                   		<!--Space for Half Column-->
+                   		<!--Space for Half Column--> 
+                        <div class="hashMainHalfStory">
+                        
+                        </div>
+                      	
+                        
                    </div>
                 
                  	
@@ -173,17 +176,32 @@
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="static/jquery/jquery-1.7.2.min.js"></script>
+    <script>
+	
+		//NOTE -- CHANGE THIS VALUE ON EACH RESIZE EVENT..
+		var width = $("#hashColumn1View").width();
+		//Now set this width to hashHalfColumn..
+		$(".hashMainHalfStory").width(width);
+		
+		$( window ).resize(function() {
+  			console.log("Window is resizing...");
+			//NOTE -- CHANGE THIS VALUE ON EACH RESIZE EVENT..
+			var width = $("#hashColumn1View").width();
+			//Now set this width to hashHalfColumn..
+			$(".hashMainHalfStory").width(width);
+			
+		});
+		
+	</script>
    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="static/bootstrap/js/bootstrap.js"></script>
     <!--<script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
     <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
     <script src="static/js/Backbone.localStorage-master/backbone.localStorage-min.js"></script>-->
-    
     <script src="static/dependencies/underscore-min.js"></script>
     <script src="static/dependencies/backbone-min.js"></script>
     <script src="static/dependencies/backbone.localStorage-min.js"></script>
-    
     <!--Now loading MVC related files -->
     <script src="static/js/models/hashbang-model.js"></script>
     <script src="static/js/collections/hashbang-collection.js"></script>

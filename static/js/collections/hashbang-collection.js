@@ -33,6 +33,8 @@ app.Collections.navLinkList = Backbone.Collection.extend({
 //Collection for posted hash tag...
 app.Collections.postedHashTagList = Backbone.Collection.extend({
 	
+
+	
 	model: app.Model.postedHashTag,
 	
 	
