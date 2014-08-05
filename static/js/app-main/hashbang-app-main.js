@@ -96,7 +96,7 @@ Modelstory = {
 
 
 navLink = [ { navId:'1',navTitle:'Jecrc' },{ navId:'2',navTitle:'C.S.' },{ navId:'3',navTitle:'B-1 Batch',active:true } ]
-
+navLink1 = [ { navId:'1',navTitle:'Story2' },{ navId:'2',navTitle:'C.S.' },{ navId:'3',navTitle:'B-1 Batch',active:true } ]
 
 votesFlag = {totalVotes:'5500'}
 
@@ -113,12 +113,12 @@ v = new app.Views.story({model:story});
 //$("#hashColumn1View").append( el );
 
 Modelstory.storyId = '3';
-story_2  = new app.Model.story(Modelstory, navLink, votesFlag, hashTagMain, postedHashTag );
-story_3  = new app.Model.story(Modelstory, navLink, votesFlag, hashTagMain, postedHashTag );
+story_2  = new app.Model.story(Modelstory, navLink1, votesFlag, hashTagMain, postedHashTag );
+//story_3  = new app.Model.story(Modelstory, navLink, votesFlag, hashTagMain, postedHashTag );
 
 Stories.add(story);
 Stories.add(story_2);
-Stories.add(story_3);
+//Stories.add(story_3);
 
 //Adding stories views...
 view = new app.Views.storyList({collection: Stories});

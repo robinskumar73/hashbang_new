@@ -397,7 +397,9 @@ app.Pages = {
 		//if it reaches outside for loop means...no text overflow is found.....
 		$(overflowElementObj).html( textString );
 		//Returning an object
-		return {visibleText :  [] , remText : []};
+		return {visibleText :  [] , remText : textString
+		
+		};
 		
 	//SplitText function ends..	
 	},
@@ -421,10 +423,14 @@ app.GeneratePages = function( stories_list_element  ){
 	var PAGE = 0;
 	var OFFSET = -1;
 	var pageOp = app.Pages;
+	var NextWasEmpty = true;
+	
 	
 	//Now return the object..
 	return {
-		
+		//Set up the counter...
+		analyseElementInProgress: false,
+			
 		//Getting the column object...
 		//returns the column element object..
 		getColumn: function(){
@@ -436,8 +442,8 @@ app.GeneratePages = function( stories_list_element  ){
 				return document.getElementById("hashColumn2View");
 			else if ( this.getPage() === 3 )
 				//return document.getElementById("hashHalfColumnView");
-				return document.getElementsByClassName("hashMainHalfStory");
-			else { /*Do nothing just return */ return; }
+				return document.getElementById("hashMainHalfStoryID");
+			else { /*Do nothing just return */ return null; }
 			
 		},
 			
@@ -449,6 +455,14 @@ app.GeneratePages = function( stories_list_element  ){
 		//Definging the push method for NEXT...
 		pushNEXT: function(value){
 			return NEXT.push(value);
+		},
+		
+		shiftNEXT: function( ){
+			return NEXT.shift();	
+		},
+		
+		unshiftNEXT: function( value ){
+			return NEXT.unshift( value );	
 		},
 		
 		lengthNEXT: function(){
@@ -473,6 +487,14 @@ app.GeneratePages = function( stories_list_element  ){
 		
 		pushPREV: function( value ){
 			return PREV.push(value);
+		},
+		
+		shiftPREV: function( ){
+			return PREV.shift();	
+		},
+		
+		unshiftPREV: function( value ){
+			return PREV.unshift( value );	
 		},
 		
 		//Get current page number..
@@ -517,41 +539,16 @@ app.GeneratePages = function( stories_list_element  ){
 			}
 			
 			if (changePage){
-				this.incrementPage();
-			}
-			
-			console.log("Page value " + this.getPage());
-
-			if( this.getPage() >  3 ){
-				//resetting page.. and then returning
-				this.resetPage();
-				console.log("All pages got processed ..NOW existing...");
-				//All pages are filled in this case just return..
-				return;
-			}
-			
-			if ( this.lengthNEXT() !== 0 ){
-				//insert NEXT elements first...
-				while (this.lengthNEXT() > 0){
-
-					console.log(" Now flushing the NEXT stack element data..." );
-					//Insert this element first..
-					this.Insert( this.getColumn(), this.popNext() );	
-				}
-				//Clearing the NEXT ARRAY...
-				console.log("Next array got fully processed...now clearing the NEXT stack..");
-				this.clearNEXT();
-				//Clearing the PREV ARRAY...
-				this.clearPREV();
+				this.flushNext( true );
 			}
 			else{
-				//Just clear the PREV ARRAY...
-				this.clearPREV();
+				this.flushNext( false );	
 			}
+
+			
 
 			//Variable for storing the story content...
 			var story;
-			console.log(stories_list_element.length);	
 			//Increment OFFSET for STORIES LIST....
 			if(this.getOffset() === -1){
 				if(stories_list_element.length){
@@ -571,7 +568,10 @@ app.GeneratePages = function( stories_list_element  ){
 					return;
 				}
 			}
-			console.log("offset value :  "+ this.getOffset());
+			
+			console.log("Current Page no. " + this.getPage());
+			console.log("Stories list element length " + stories_list_element.length);	
+			console.log(" Stories list current offset point " + this.getOffset());
 			console.log(" Column name:  " + $(this.getColumn()).attr("class") );
 			//Removing the <div> content from the elements..
 			story = $(story).children() ;
@@ -582,6 +582,71 @@ app.GeneratePages = function( stories_list_element  ){
 		}, //End of createPage method..
 		
 		
+		
+		
+		//Function for flushing the next page or changing the page is true..
+		flushNext: function( changePage  )
+		{
+			
+			console.log("I am inside flush Next");
+			
+			
+			if (changePage){
+				this.incrementPage();
+			}
+			console.log("Current Page no. " + this.getPage());
+			
+			//Testing
+			if(this.getPage() === 3){
+				console.log( "Length of NEXT in Page-3 "+this.lengthPREV() );	
+			}
+			
+
+			if( this.getPage() >  3 ){
+				//resetting page.. and then returning
+				this.resetPage();
+				console.log("All pages got processed ..NOW existing from flushNext");
+				//All pages are filled in this case just return..
+				return null;
+			}
+			
+			if ( this.lengthNEXT() ){
+				//insert NEXT elements first...
+				while (this.lengthNEXT() ){
+
+					console.log(" Now flushing the NEXT stack element data..." );
+					if(this.getColumn() === null)
+					{
+						//In this case all pages got processed ....just return...
+						return null;
+						
+					}
+					else
+					{ 
+						//Change NEXT value status...
+						NextWasEmpty = false;
+						
+						//Insert this element first..
+						this.Insert( this.getColumn(), this.shiftNEXT() );
+					}
+				}
+				//Clearing the NEXT ARRAY...
+				console.log("Next array got fully processed...now clearing the NEXT stack..");
+				this.clearNEXT();
+				//Clearing the PREV ARRAY...
+				this.clearPREV();
+			}
+			else{
+				//Just clear the PREV ARRAY...
+				this.clearPREV();
+			}
+			
+			//Change NEXT value status...
+			NextWasEmpty = true;
+			console.log("Returning from flush page..NEXT EMPTY Picking Up a NEW STORY..");
+		},
+		
+		
 	
 
 		//Method for inserting Element to its respective column...
@@ -589,6 +654,11 @@ app.GeneratePages = function( stories_list_element  ){
 		//Element may be any Jquery element object...
 		Insert: function(ColumnElement, Element){
 			
+			console.log("Inside Insert function..");
+			if(this.getPage() === 3)
+			{
+				ColumnElement = document.getElementById("hashMainHalfStoryID");
+			}
 			//Picking the elements and appending it to Column...
 			//First converting it to an Jquery object..
 			Element = $(Element);
@@ -596,12 +666,16 @@ app.GeneratePages = function( stories_list_element  ){
 			$(ColumnElement).append(Element);
 			console.log($(ColumnElement).children() );
 			//Logging
-			console.log("Inside Insert function checking for OverflowY");
+			console.log("Inside Insert function checking for OverflowY " +  pageOp.OverflowY( ColumnElement ) );
+			
+			//Testing
+			//if(this.getPage() < 3){
+			
 			if( pageOp.OverflowY( ColumnElement ) ){
 			 	//Logging 
 				console.log("calculateYOverflow in Insert func ");
 				//Now calculating the OverFlow occuring in the page and also detaching the content causing overflow..
-				var items = pageOp.calculateYOverflow( this.getColumn() );
+				var items = pageOp.calculateYOverflow( ColumnElement );
 				console.log(items);
 				console.log("length of invisibleItems length " +  items.invisibleItems.length );
 				console.log("After calculateYOverflow length of visibleItems  "+ items.visibleItems.length );
@@ -619,15 +693,27 @@ app.GeneratePages = function( stories_list_element  ){
 				//Now analysing the invisible items...
 				//Call analyse Elements..
 				//Now detaching the invisible elements...
+				//also push all invisible items to NEXT ARRAY...
 				for(i = 0; i < items.invisibleItems.length; i++  ){
-					console.log("detaching the invisibleItems");
-					$(items.invisibleItems[i]).detach();
+					
+					console.log("detaching the invisibleItems and pushing to NEXT ARRAY..");
+					if( NextWasEmpty){
+						console.log("NEXT WAS EMPTY BEFORE");
+						this.pushNEXT( $(items.invisibleItems[i]).detach() );
+					}
+					else{
+						console.log("NEXT WAS NOT EMPTY BEFORE");
+						this.unshiftNEXT( $(items.invisibleItems[i]).detach() );
+					}
+					console.log($(items.invisibleItems[i]));
+					
 					
 				}
 				
+				
 				//$("#hashColumn1View").append( items.invisibleItems  );
 			
-				this.analyseElements( items.invisibleItems );
+				return this.analyseElements(  );
 				
 			}
 			
@@ -639,26 +725,38 @@ app.GeneratePages = function( stories_list_element  ){
 				
 			}
 			
+			//}//End of testing
+			
+			
 		}, //End of INSERT...
+		
+		
+		
 	
 
 
 		//analyse the type of element and perform operation according to it...
 		//Recursive function..
-		analyseElements: function( items ){
+		analyseElements: function(  ){
 			console.log("Inside analyseElements...");
+			
+			//set up a counter..
+			//this.analyseElementInProgress = true;
+			
 			//Defiging patterns for regular expressions...
 			var hashMainStory = /hashMainStory/;
 			//Regex tester for HashMainStoryMetadata
 			var hashMainStoryMetadata =  /hashMainStoryMetadata/;
 			var element;	
-			if( items.length ){
-				console.log("shifting the from items from analyseElements.."  );
-				element = items.shift();
+			if( this.lengthNEXT() ){
+				console.log("shifting the items  from NEXT STACK.. length NEXT = " + this.lengthNEXT()  );
+				element = this.shiftNEXT();
 			}
 			else{
 				console.log("Items finished ... now returning from analyseElements");
-				//return ..
+				
+				//Set up the counter...
+				//this.analyseElementInProgress = false;			
 				return;	
 			}
 			//Now getting its attribute...
@@ -667,7 +765,7 @@ app.GeneratePages = function( stories_list_element  ){
 			if ( hashMainStoryMetadata.test( class_ ) ){
 				//Call method for doing operations related to hashMainStoryMetadata to this element	
 				console.log("Processing for hashMainStoryMetadata... ");
-				//this.DoHashMainStoryMetadata( element );
+				this.DoHashMainStoryMetadata( element );
 			}
 			else if( hashMainStory.test(class_) ){
 				//Call method for doing operations related to hashMainStory to this element..
@@ -678,10 +776,13 @@ app.GeneratePages = function( stories_list_element  ){
 				//Do nothing here...
 			}
 			
+			
 			//return with recursive call to itself....
-			return this.analyseElements( items ) ; 
+			return this.analyseElements(  ) ; 
 				
 		}, // End of analyseElements method..
+		
+		
 		
 		//Performs operations related to HashMainStory class ....
 		DoHashMainStory: function( element ){
@@ -740,12 +841,14 @@ app.GeneratePages = function( stories_list_element  ){
 				$(clonedPara).append(remText);
 				//Appending it to parent..
 				$(parent).append(clonedPara);
-				//Put parent in NEXT Array...
-				this.pushNEXT(parent);
-				console.log("returning to next page...after splitting paragraph text normally. : verified upto this... code.");
-				//Now return and  turn to next page..
 				
-				return this.createPage( );
+				console.log("Unshifting the elements..");
+				console.log(textObj.remText);
+				//Put/unshift parent in NEXT Array...
+				this.unshiftNEXT(parent);
+				console.log("returning to next page...after splitting paragraph text normally. : REM TEXT: ");
+				//Now return and  turn to next page..
+				return this.flushNext( true );
 				
 			}//End of if checking para -> "length>0"
 			else
@@ -763,15 +866,16 @@ app.GeneratePages = function( stories_list_element  ){
 		changePage: function( detachElementObj ){
 			//Now detaching the element from column ...
 			detachElementObj = $(detachElementObj).detach();
-			//Pushing the element to NEXT stack array...
-			this.pushNEXT(detachElementObj);
-			//Indirect Recursive Call to  Create page recursive with Change page = true
-			return this.createPage( );
+			//Pushing/Unshifting  the element to NEXT stack array at position top of the stack...
+			this.unshiftNEXT(detachElementObj);
+			//Indirect Recursive Call to  flush NEXT...
+			return this.flushNext( true );
 		},
 	
 
 
 		DoHashMainStoryMetadata: function( element ){	
+		
 		
 			console.log("Inside DoHashMainStoryMetadata.. element: " + element);
 			//clone this element and empty it content...	
@@ -782,14 +886,15 @@ app.GeneratePages = function( stories_list_element  ){
 			var child  = $(element).children();
 			child = $(child).detach();
 			//var child = $(child).children();
-
-
+				
+			console.log(this.getColumn());
 			//Now appending the story to HashMainStoryMetdata....
 			$( this.getColumn() ).append( element );
 			
 			//Check if overflow still occurs...
 			//Logging
 			console.log("Inside DoHashMainStoryMetadata...checking for OverflowY ");
+			
 			if( pageOp.OverflowY(this.getColumn()) )
 			{
 				console.log( "returning from hashMainStoryMetadata as no space is avail" );	
@@ -797,18 +902,21 @@ app.GeneratePages = function( stories_list_element  ){
 				return this.changePageMetdata( element, child );
 			
 			}
-
+			
 			//Identifier for checking data-type
 			//Defiging patterns for regular expressions...
 			var tagData  = /tag-data/ ;
 			//Regex tester for element of class nav-data
 			var navData =  /nav-data/;
 
-
+			
 			
 			if( child.length )
 			{
-			   for( var i = 0; i<child.length; i++)
+				console.log("child length = "+ child.length);
+				var Len = child.length;
+				
+			   for( var i = 0; i<Len; i++)
 			   {
 				//Pop a child..
 				var temp = child[i];
@@ -832,7 +940,7 @@ app.GeneratePages = function( stories_list_element  ){
 					}
 				
 				}
-				
+				/*
 				//Working with tag data element..
 				if( tagData.test( class_ )  )
 				{
@@ -951,7 +1059,7 @@ app.GeneratePages = function( stories_list_element  ){
 			
 				}//End of if condition for checking of tagData
 
-
+				*/
 			    }//End of for loop...
 				
 			}
@@ -967,9 +1075,9 @@ app.GeneratePages = function( stories_list_element  ){
 			var element = $(detachElement).detach();
 			$(element).append(childElements);
 			//Now push to NEXT array...
-			this.pushNEXT(element);	
+			this.unshiftNEXT(element);	
 			//change page  by calling it recusive....
-			return this.createPage(true);
+			return this.flushNext( true );
 		},
 		
 		
