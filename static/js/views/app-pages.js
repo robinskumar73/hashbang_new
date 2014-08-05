@@ -257,7 +257,7 @@ app.Pages = {
 				{
 					escapeWord = escapeWord + textString[i] ;
 					escCounter++;
-					if( escCounter > 8 || textString[i] === ';' )
+					if( escCounter > 50 || textString[i] === ';' )
 					{
 						htmlEscapeProcessing = false;
 						escCounter = 0;
@@ -558,7 +558,7 @@ app.GeneratePages = function( stories_list_element  ){
 				}
 			}
 			else{
-				if( this.getOffset() <  stories_list_element.length )
+				if( this.getOffset() <  stories_list_element.length && this.getPage() !==0 && this.getPage()<4 )
 				{
 					this.incrementOffset();
 					story = stories_list_element[ this.getOffset() ];
@@ -597,12 +597,7 @@ app.GeneratePages = function( stories_list_element  ){
 			}
 			console.log("Current Page no. " + this.getPage());
 			
-			//Testing
-			if(this.getPage() === 3){
-				console.log( "Length of NEXT in Page-3 "+this.lengthPREV() );	
-			}
 			
-
 			if( this.getPage() >  3 ){
 				//resetting page.. and then returning
 				this.resetPage();
@@ -616,8 +611,9 @@ app.GeneratePages = function( stories_list_element  ){
 				while (this.lengthNEXT() ){
 
 					console.log(" Now flushing the NEXT stack element data..." );
-					if(this.getColumn() === null)
+					if(this.getColumn() === null || this.getPage() === 0 || this.getPage() > 3)
 					{
+						console.log("Breaking loop...");
 						//In this case all pages got processed ....just return...
 						return null;
 						
@@ -713,7 +709,7 @@ app.GeneratePages = function( stories_list_element  ){
 				
 				
 				//$("#hashColumn1View").append( items.invisibleItems  );
-			
+				console.log("at line 716");
 				return this.analyseElements(  );
 				
 			}
@@ -758,7 +754,7 @@ app.GeneratePages = function( stories_list_element  ){
 				
 				//Set up the counter...
 				//this.analyseElementInProgress = false;			
-				return;	
+				return null;	
 			}
 			//Now getting its attribute...
 			var class_ = $( element ).attr("class");
@@ -777,10 +773,15 @@ app.GeneratePages = function( stories_list_element  ){
 				//Do nothing here...
 			}
 			
-			
-			//return with recursive call to itself....
-			return this.analyseElements(  ) ; 
-				
+			if(this.getPage() < 3 && this.getPage() !== 0){
+				//return with recursive call to itself....
+				console.log("HEY");
+				return this.analyseElements(  ) ; 
+			}
+			else{
+				console.log("Finishing...");	
+				return null;
+			}
 		}, // End of analyseElements method..
 		
 		
@@ -941,10 +942,13 @@ app.GeneratePages = function( stories_list_element  ){
 					}
 				
 				}
-				/*
+				
 				//Working with tag data element..
 				if( tagData.test( class_ )  )
 				{
+					console.log("Inside TAGDATA TEST METADATA..");
+					console.log("length of NEXT = "+ this.lengthNEXT());
+					
 					//Now append the second child element...
 					$( element ).append( temp );
 					
@@ -978,6 +982,7 @@ app.GeneratePages = function( stories_list_element  ){
 							console.log("changing page...");
 							//re-attach the child to hashtag element....
 							$(temp).append(hashtag);
+							
 							if(postBox){
 								//append the postbox..
 								$(temp).append(postBox);
@@ -986,11 +991,14 @@ app.GeneratePages = function( stories_list_element  ){
 							temp = $(temp).detach();
 							//appending to parent...
 							$(parent).append(temp);
-							//Push to NEXT
-							this.pushNext(parent);
+							console.log("After CHANGING PAGE..");
+							
+							//---CHANGED TO UNSHIFT --Push to NEXT
+							this.pushNEXT(parent);
 							//Now change the page...
 							//change page  by calling it recusive....
-							return this.createPage(true);
+							console.log("Now flushing NEXT by changing the page and returning from hashStoryMetadata");
+							return this.flushNext( true );
 						}
 						console.log("I am splitting the text...");
 						//Now split it..
@@ -1005,15 +1013,21 @@ app.GeneratePages = function( stories_list_element  ){
 							console.log("Still overflow is occuring after splitting hashtags ... returning..");
 							//detach the temp element...
 							temp = $(temp).detach();
-							//appending to parent element...
-							$(parent).append( temp );
-							//Now push to NEXT array...
-							this.pushNEXT(parent);
-							//Push the visible to PREV stack...
-							this.pushPREV( element );	
+							
+							//appending hashtag 				
+							$(temp).append(hashtag);
+							
+							if(postBox){
+								//append the postbox..
+								$(temp).append(postBox);
+							}
+							
+							//---CHANGED TO UNSHIFT --Push to NEXT
+							this.pushNEXT(temp);
+							
 							
 							//change page  by calling it recusive....
-							return this.createPage(true);
+							return this.flushNext(true);
 						}
 					
 					
@@ -1042,11 +1056,15 @@ app.GeneratePages = function( stories_list_element  ){
 							//append the postbox..
 							$(tmp).append(postBox);
 						}
-						this.pushNEXT( parent );
+						
+						//---CHANGED TO UNSHIFT --Push to NEXT
+						this.pushNEXT(parent);
+						
 						
 						console.log(" Returning from hashMainStoryMetadata");
+						
 						//change page  by calling it recusive....
-						return this.createPage( );
+						return this.flushNext( true );
 					
 					}//checking overflow...
 					else
@@ -1060,7 +1078,7 @@ app.GeneratePages = function( stories_list_element  ){
 			
 				}//End of if condition for checking of tagData
 
-				*/
+				
 			    }//End of for loop...
 				
 			}
