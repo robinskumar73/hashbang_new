@@ -6,7 +6,7 @@
 body{
 	height:100%;
   	height: 100vh;
-	
+
 
 	/*background:url(../images/whiteback.png) repeat; */
 }
@@ -15,7 +15,7 @@ body{
 body{
 	margin-left:220px;	
 	overflow:hidden;
-	
+
 }
 
 
@@ -69,7 +69,7 @@ body{
 .hashBookMarkBox:hover
 {
 	color:#333;
-	
+
 	cursor: pointer ;	
 }
 
@@ -82,7 +82,7 @@ body{
 	box-shadow: inset 1px 1px 1px 1px #cbc5c5; 
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#cbc5c5')";
 	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#cbc5c5');
-		
+
 }
 
 
@@ -103,7 +103,7 @@ body{
 }
 @media (min-width: 768px) {
 .hashSideBar {
-	
+
 	background: #111111;
     display: block;
     overflow-x: hidden;
@@ -114,13 +114,13 @@ body{
 	left:0px;
 	z-index:1000;
 	width:220px;
-	
+
   }
 }
 
 .logo{
 
-	
+
 	font-family: BradburySans-Light ; 
 	padding-top:30px;
 	font-size:35px;
@@ -131,7 +131,7 @@ body{
 
 @media (min-width: 768px) {
 .logo {
-	
+
 	margin:30px auto 10px auto;
 	margin-left:35px;
   }
@@ -144,7 +144,7 @@ body{
 	font-size:11px;
 	margin-bottom:50px;
 	text-align:center;
-	
+
 }
 
 
@@ -158,7 +158,7 @@ body{
 	border:none;
 	color:#eee;
 	border-radius:0px;
-	
+
 }
 
 .hashSearchSidebar:focus{
@@ -169,7 +169,7 @@ body{
 
 .hashSearchBox{
 	padding:0px 20px 0px 20px;
-	
+
 }
 
 .hashAdjustTopIcon{
@@ -186,9 +186,9 @@ body{
 
 .hashLoadingDisplayHidden{
 	/*Default to hidden*/
-	
+
 	display:none;
-	
+
 }
 
 
@@ -200,7 +200,7 @@ body{
 
 
 .hashTrendingHeading{
-	
+
 	font-family:Lato, sans-serif;
 	font-size:15px;
 	margin-top:120px;
@@ -270,7 +270,7 @@ body{
 	font-size:15px;
 	/*font-family:Lato, sans-serif;*/
 	font-family:Calibri, Arial, Verdana;
-	
+
 }
 
 .hashTrendinglist a {
@@ -281,7 +281,7 @@ body{
 .hashListItemTrending{
 	margin-bottom:5px;
 	padding-right:7px;
-	
+
 
 }
 
@@ -444,7 +444,7 @@ body{
 .hashMainBackground{
 	/*background:#eee;
 	*/
-	
+
 
 }
 
@@ -465,6 +465,7 @@ body{
 
 
 .hashMainHalfStory{
+
 	padding-top:15px;
 	height:100%;
 	height:100vh;
@@ -475,9 +476,9 @@ body{
 }
 
 @media (min-width: 768px) {
-	
+
 .hashMainHalfStory{
-	
+
 	width:477px;
 	text-align:justify;
 
@@ -490,7 +491,7 @@ body{
 	overflow-x:hidden;
 	height:100%;
 	height:100vh;
-	
+
 }
 
 .hashStoryMainHeading{
@@ -528,7 +529,7 @@ body{
 	border-color:#eee;
 	border-width:0px 1px 0px 0px;
 	overflow:hidden;
-	
+
 }
 
 .hashNextPageNav{
@@ -559,7 +560,7 @@ body{
 	display:inline-block;
 	color:#235ea7;
 	font-size:15px;
-	
+
 	/*font-weight:bold; */
 	font-family:Calibri, Arial, Verdana; 
 
@@ -650,7 +651,7 @@ body{
 	display:inline;
 	padding-left:30px;
 	padding-right:0px;
-	
+
 }
 
 .hashMainHashTagPostBox{
@@ -673,7 +674,7 @@ body{
 .hashMainHashTagPost{
 	margin-right:15px;
 	border-radius:0px;
-	
+
 }
 
 .hashMainHashTagPost:focus{
@@ -695,7 +696,7 @@ body{
 	border-color:#ccc;
 	border-width:0px 0px 1px 0px;
 	cursor:default;
-	
+
 }
 .hashMainPromoteText:hover{
 	/*color:#064994;*/
