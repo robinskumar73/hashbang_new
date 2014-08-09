@@ -1,0 +1,6 @@
+/*!CK:2714179883!*//*1401178583,178134619*/
+
+if (self.CavalryLogger) { CavalryLogger.start_js(["Jfbgv"]); }
+
+__d("ItunesDetector",["UserAgent"],function(a,b,c,d,e,f,g){function h(){var j=navigator.plugins;if(j&&j.length)for(var k=0;k<j.length;k++)if(j[k].name.indexOf("iTunes Application Detector")>-1)return true;return false;}var i={hasItunes:function(){if(g.osx()){return true;}else return h();}};e.exports=i;},null);
+__d("NekoMedia",["csx","BanzaiODS","DOM","Event","ItunesDetector","UserAgent"],function(a,b,c,d,e,f,g,h,i,j,k,l){function m(o,p){h.bumpEntityKey(o,p);h.flush();}var n={attachClickListeners:function(o,p,q){var r=k.hasItunes(),s='neko.desktop.media.test',t=null;if(l.osx()){t='osx';}else if(l.ie()){t='ie';}else t='other';var u=r?'itunes':'no_itunes';m(s,'neko.impression.'+u);m(s,'neko.impression.'+t);m(s,'neko.impression.'+t+'.'+u);var v=i.scry(o,"._5yjw");v.forEach(function(w){j.listen(w,'click',function(x){x.preventDefault();m(s,'neko.click.'+u);m(s,'neko.click.'+t);m(s,'neko.click.'+t+'.'+u);if(r){window.location=p;}else window.open(q);});},null);}};e.exports=n;},null);

@@ -26,6 +26,7 @@ $(document).keydown(function(e) {
         break;
 
         case 39: // right
+		e.preventDefault();
 		console.log("Turn to NEXT stories..");
 		turnNext()
         break;
@@ -46,10 +47,13 @@ var turnNext = function(){
     var options = { direction: 'left' };
  
     // Set the duration (default: 400 milliseconds)
-    var duration = 1000;
-	$("#storyList").toggle(effect, options, duration);
+    var duration = 700;
+	//$("#storyList").toggle(effect, options, duration);
+	//$("#storyList").hide("slide", { direction: "left" }, 1000);
 	init();
-	$("#storyList").toggle( "fade",{}, 0);
+	//$("#storyList").toggle( "fade",{}, 0);
+	
+	
 	
 	
 }

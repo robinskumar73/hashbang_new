@@ -447,6 +447,11 @@ app.GeneratePages = function( stories_list_element  ){
 			else { /*Do nothing just return */ return null; }
 			
 		},
+		
+		getTempColumn: function(){
+			return document.getElementById('hashCheckColumn');
+			
+		},
 			
 		//Definging the methode for pop  NEXT
 		popNext: function(){
