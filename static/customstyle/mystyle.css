@@ -2,26 +2,6 @@
 /* CSS Document */
 /*CSS DOCUMENT DESIGNED BY ROBINS GUPTA. */
 
-@media (min-width: 768px) {
-body{
-	height:100%;
-  	height: 100vh;
-	margin-left:210px;	
-	/*background:url(../images/whiteback.png) repeat; */
-}
-}
-
-body{
-	
-	overflow:hidden;
-
-}
-
-h3{
-	font-size:23px;
-}
-
-
 @font-face{
 	font-family:Lato-Bold-Italic;
 	src:url(../bootstrap/fonts/Lato/Lato-BoldItalic.ttf);
@@ -33,6 +13,30 @@ h3{
 	font-family:Lato;
 	src:url(../bootstrap/fonts/Lato/Lato-Regular.ttf);
 }
+
+
+
+
+@media (min-width: 768px) {
+body{
+	height:100%;
+  	height: 100vh;
+	margin-left:210px;	
+	/*background:url(../images/whiteback.png) repeat; */
+}
+}
+
+body{
+	font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+	line-height:1.714285714em;
+	overflow:hidden;
+
+}
+
+h3{
+	font-size:23px;
+}
+
 
 
 
@@ -64,14 +68,14 @@ h3{
 	background:#fff;
 	width:30px;
 	height:27px;
-	color:#999;
+	color:#666;
 	text-align:center;
 	padding-top:7px;
 }
 
 .hashBookMarkBox:hover
 {
-	color:#333;
+	color:#222;
 
 	cursor: pointer ;	
 }
@@ -107,7 +111,8 @@ h3{
 @media (min-width: 768px) {
 .hashSideBar {
 
-	background: #111111;
+	background:#222;
+	background-color:#303030;
     display: block;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
@@ -117,31 +122,39 @@ h3{
 	left:0px;
 	z-index:1000;
 	width:210px;
+	background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #303030), color-stop(100%, #1c1c1c));
+	background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #222), color-stop(100%, #1c1c1c));
+	background-image:-webkit-linear-gradient(top, #303030 0%, #1c1c1c 100%);
+	background-image: -moz-linear-gradient(linear, left top, left bottom, color-stop(0%, #303030), color-stop(100%, #1c1c1c));
+	background-image:-o-linear-gradient(#303030 , #1c1c1c );
+	background-image:-ms-linear-gradient(#303030 , #1c1c1c );
+	background-image:-moz-linear-gradient(#303030 , #1c1c1c );
+	background-image: linear-gradient(#303030 , #1c1c1c );
+	
 
   }
 }
 
 .logo{
-
-
-	font-family: BradburySans-Light ; 
-	padding-top:30px;
-	font-size:35px;
+	padding-top:20px;
 	text-align:center;
-	color:#ddd;
+	width:150px;
+	height:auto;
+	
 
 }
 
 @media (min-width: 768px) {
 .logo {
-
-	margin:30px auto 10px auto;
-	margin-left:35px;
+	margin-right:5px;
+	margin-left:23px;
+	padding-bottom:8px;
   }
 }
 
 .hashUsernameSidebar{
-	/*font-family:Arial, Helvetica, sans-serif;*/
+	
+	font-family:Arial, Helvetica, sans-serif;
 	font-family: Lato, sans-serif;
 	color:#555555;
 	font-size:10px;
@@ -157,10 +170,11 @@ h3{
 
 
 .hashSearchSidebar{
-	background:#212121;
+	background:#232323;
 	border:none;
 	color:#eee;
 	border-radius:0px;
+	
 
 }
 
@@ -207,14 +221,25 @@ h3{
 	font-family:Lato, sans-serif;
 	font-size:13px;
 	margin-top:120px;
-	color:#bbbbbb;
+	color:#fff;
 	padding-left:20px;
-	padding-bottom:7px;
+	padding-bottom:2px;
 	padding-top:4px;
 	cursor:pointer;
 	border-style:solid;
-	border-color:#222222;
+	border-color:#232323;
 	border-width:1px 0px 1px 0px;
+	border:none;
+}
+
+.separator-menu-item{
+	height:0px;
+	position:relative;
+	border-top:1px solid #121212;
+	border-bottom:1px solid #333;
+	margin:7px 5px;
+	border-radius:2px;	
+	
 }
 
 
@@ -301,7 +326,7 @@ h3{
 }
 
 .hashSideBarBookMarkBox{
-	background:#212121;
+	background:#242424;
 	width:45px;
 	height:40px;
 	color:#8e8d8d;
@@ -309,6 +334,7 @@ h3{
 	padding-top:11px;
 	font-size:17px;
 	cursor:pointer;
+	
 }
 
 .hashSideBarBookMarkBox:hover{
@@ -516,6 +542,13 @@ h3{
 	font-size:15px;
 }
 
+.form-control{
+	border:none;	/*Modified bootstrap css*/
+	box-shadow:none;
+	
+}
+
+
 
 
 .hashMainStoryImage{
@@ -556,6 +589,7 @@ h3{
 	font-size:13px;
 	font-family:Lato-Bold-Italic, sans-serif;
 	cursor:pointer;
+	
 }
 .hashMainStoryHashTag:hover{
 	color:#1b1b1b;
@@ -566,21 +600,46 @@ h3{
 	padding-bottom:3px;
 	padding-right:8px;
 	display:inline-block;
-	color:#235ea7;
-	font-size:14px;
-
+	font-size:12px;
 	/*font-weight:bold; */
-	font-family:Calibri, Arial, Verdana; 
-
+	font-family: Calibri, Arial, Verdana; 
 	cursor:pointer;
 	margin-bottom:0px;
 	margin-top:8px;
+	
 }
+
+.hashTagBox{
+	background-color:#f0f9ff!important;
+	background-image:none;
+	color:#777;
+	padding:3px 10px;
+	border:solid 1px #ff9ba8;
+	border-width:0px 0px 0px 0px;
+	margin-right:6px;
+}
+
+.default{
+	background:#f0f9ff !important;
+}
+
+.red{
+	background:#fff5f5 !important;
+}
+
+.green{
+	background-color:#f0fff0!important;
+}
+
+.blue{
+	background-color:#f0f9ff!important;	
+}
+
+
 
 .hashMainStoryPostedHashTag:hover{
 	/*color:#1b1b1b;*/
-	color:#184b8b;
-	font-weight:bold;
+	color:#555;
 }
 
 .testPostedHashTag{
@@ -665,10 +724,16 @@ h3{
 .hashMainHashTagPostBox{
 	margin-left:30px;
 	box-shadow:none;	
-	border:none;
-	border-style:none;
-	border-width:0px;
-	padding-bottom:40px;
+	border-style:solid;
+	border-color:#eee;
+	border-width:1px 0px 1px 0px;
+	margin-bottom:40px;
+	margin-right: 40px;
+}
+
+
+div.hashMainHashTagPostBox:hover{
+		border-color:#ccc;
 }
 
 .hashMainStoryMetadataHashtag{
@@ -682,6 +747,7 @@ h3{
 .hashMainHashTagPost{
 	margin-right:15px;
 	border-radius:0px;
+	width:inherit;
 
 }
 
@@ -721,3 +787,4 @@ h3{
 	bottom:0px;	
 
 }
+

@@ -159,6 +159,7 @@ app.Pages = {
 	//Now writing code for splitting a text...
 	//First remove that child obj(element) from parent container which you want to break...
 	splitText: function(textString, overflowElementObj, overflowElementContainerObj, ParentContainerObj){
+		console.log("TEXT STRING IS:-- "+ textString);
 		var textLength = textString.length;
 		var tag = '', escapeWord = '' ;
 		var htmlEscapeProcessing = false, startTagFlag = false ,stopTagFlag = false, wordProcessing = false;
@@ -203,6 +204,7 @@ app.Pages = {
 						else if( startTagFlag )
 						{
 							stackArray.push(tag);
+							console.log("StackArray elements:- " + tag);
 						}
 						else if( stopTagFlag )
 						{
@@ -335,17 +337,36 @@ app.Pages = {
 					
 					//console.log("I am in splitText");
 					//Forming the split Text  
+					console.log("formatted text string:- "+ textString);
 					var newText = textString.slice(0,i);
+					console.log("Before newPosition:- "+ newText);
+					var newPosition;
+					//First checking for possibility of any element closing tag type....
+					newPosition = newText.search(/((\>)\s*$)/);
 					
-					//Now creating the nonOverlapping form of text...
-					var newPosition = newText.search(/(\s)\S*$/);
-					if( newPosition != -1)
+					//Now print the new position on text..
+					console.log("****New position of TEXT after checking for tag " + newPosition );
+					if(newPosition === -1)
 					{
-						i = newPosition;
-						//Now getting exact NonOverlapped value..
-						newText = textString.slice(0,i);
-						//console.log("i position "+i);
+						//Now creating the nonOverlapping form of text...
+						//here this /(\s*)\S*$/ for avoiding cutting commas and other chars/
+						newPosition = newText.search( /(\s*)\S*$/);
+						//var newPosition = -1;
+						if( newPosition != -1 )
+						{
+							//Setting the closing tag in this case...
+							i = newPosition;
+							//Now getting exact NonOverlapped value..
+							newText = textString.slice(0,i);
+						}
 					}
+					else
+					{
+						/*Do nothing just print the whole string*/
+						console.log("My new TEXT VALUE for applying closing tag.. " + newText);
+					}
+						
+						
 					var remText = textString.slice(i);
 					//console.log(stackArray.length);
 					
@@ -359,18 +380,24 @@ app.Pages = {
 							 var tagElement = stackArray.pop();
 							 //console.log("popped tag value "+tagElement);
 							 //Removing the class and other attributes..
-							 var clearAttr = /^<\s*[a-zA-z0-9]/;
+							 var clearAttr = /^<\s*[a-zA-z0-9]*\s*/;
 							 var tag_ =  clearAttr.exec(tagElement);
+							
 							 var closeTagElement;
 							 if(tag_ !==  null){
 								 tag_ = tag_[0] + ">";
 							  	 closeTagElement = this.convertCloseTag( tag_ );
+								 
 							 }
 							 else{
 							 	closeTagElement = this.convertCloseTag( tagElement );
 							 }
 							 newText = newText + closeTagElement ;
+							 console.log("newText after applying the closing tag:- "+ newText);
 							 remText = tagElement + remText;
+							 console.log("remText:- "+remText);
+							 
+							 
 						}
 					}
 					
@@ -385,7 +412,8 @@ app.Pages = {
 					//$( overflowElementObj ).empty();
 					
 				
-					
+					console.log("NEW TEXT:- "+ newText);
+					console.log("REMANING TEXT:-- "+ remText);
 					//Returning an object
 					return {visibleText :  newText , remText : remText};
 				}
@@ -425,6 +453,7 @@ app.GeneratePages = function( stories_list_element  ){
 	var OFFSET = -1;
 	var pageOp = app.Pages;
 	var NextWasEmpty = true;
+	var MainColumnGotFilled = false;
 	
 	
 	//Now return the object..
@@ -438,12 +467,14 @@ app.GeneratePages = function( stories_list_element  ){
 			
 			if( this.getPage() === 1 )
 				//returns the id name of the Column..
-				return document.getElementById("hashColumn1View");
+				return document.getElementsByClassName('hashMainColumn')[0];
+				//return document.getElementById("hashColumn1View");
 			else if( this.getPage() === 2 )
-				return document.getElementById("hashColumn2View");
+				return document.getElementsByClassName('hashMainColumn')[1];
+				//return document.getElementById("hashColumn2View");
 			else if ( this.getPage() === 3 )
-				//return document.getElementById("hashHalfColumnView");
-				return document.getElementById("hashMainHalfStoryID");
+				return document.getElementsByClassName('hashMainHalfStory')[0];
+				//return document.getElementById("hashMainHalfStoryID");
 			else { /*Do nothing just return */ return null; }
 			
 		},
@@ -545,6 +576,7 @@ app.GeneratePages = function( stories_list_element  ){
 			}
 			
 			if (changePage){
+				
 				this.flushNext( true );
 			}
 			else{
@@ -578,7 +610,7 @@ app.GeneratePages = function( stories_list_element  ){
 			console.log("Current Page no. " + this.getPage());
 			console.log("Stories list element length " + stories_list_element.length);	
 			console.log(" Stories list current offset point " + this.getOffset());
-			console.log(" Column name:  " + $(this.getColumn()).attr("class") );
+			
 			//Removing the <div> content from the elements..
 			story = $(story).children() ;
 			//console.log( $(story) );
@@ -599,7 +631,16 @@ app.GeneratePages = function( stories_list_element  ){
 			
 			if (changePage){
 				this.incrementPage();
+				if(this.getColumn()=== null){
+					//all pages got filled return...
+					return null;
+				}
+				else{
+					//First write the content to Column...
+					$( this.getColumn() ).html( $( this.getTempColumn() ).html() );
+				}
 			}
+			
 			console.log("Current Page no. " + this.getPage());
 			
 			
@@ -1007,10 +1048,11 @@ app.GeneratePages = function( stories_list_element  ){
 						}
 						console.log("I am splitting the text...");
 						//Now split it..
+						var oriText = $(hashtag).html();
 						var textValue  = pageOp.splitText( $(hashtag).html(), hashtag, element, this.getColumn() );
 						
 						
-						console.log(textValue);
+						
 						
 						//check if overflow still occurs...
 						if( pageOp.OverflowY(this.getColumn()) )
@@ -1018,7 +1060,10 @@ app.GeneratePages = function( stories_list_element  ){
 							console.log("Still overflow is occuring after splitting hashtags ... returning..");
 							//detach the temp element...
 							temp = $(temp).detach();
-							
+							//Appending the rem text of hashtag in this case...
+							$(hashtag).empty();
+							$(hashtag).append(oriText);
+							console.log($(hashtag).html());
 							//appending hashtag 				
 							$(temp).append(hashtag);
 							

@@ -1,0 +1,2 @@
+text.search(/(\s*)\S*$/);
+text = '<span><span class=" hashTagBox h5 hashMainStoryPostedHashTag">	</span ></span>'

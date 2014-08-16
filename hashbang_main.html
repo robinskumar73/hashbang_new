@@ -12,11 +12,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 
+
+
 												<!--SIDE NAVIGATION BAR--->
 											<!--Div for side navigation bar -->
-<div class="hashSideBar shadow">            
-	<a class="navbar-brand logo" href="#">HASHBANG</a>
-    <div class="hashUsernameSidebar h5">THURSDAY, APRIL 8 2014</div>
+<div class="hashSideBar shadow">   
+         
+	<a class="navbar-brand logo"  href="#"><img src="static/images/logo_final_hover.png" />  </a>
+   <div class="hashUsernameSidebar h5">THURSDAY, APRIL 8 2014</div>
     
     <div id="squaresWaveG" class="hashLoadingDisplayHidden">
 			<div id="squaresWaveG_1" class="squaresWaveG"></div>
@@ -29,17 +32,21 @@
 			<div id="squaresWaveG_8" class="squaresWaveG"></div>
   </div> 
         
-    <div class="form-group  has-feedback hashSearchBox" >
+    <div class="form-group  has-feedback hashSearchBox" style="margin-top:5px;" >
     	<input type="search" class="form-control col-xs-1 hashSearchSidebar" placeholder="Stories, #Tags">
         <span class="glyphicon glyphicon glyphicon-search   form-control-feedback hashAdjustTopIcon" ></span>
     </div>
    
    
     	<div >    
+        	
         	<div class="hashTrendingHeading" >
             	<span style="padding:0px">Trending Now</span>
+               
                 <div class="hashTrendingListHeadingColorBox" style="padding:0px;"></div>
             </div>
+             <!--Adding seperator class-->
+             <div class="separator-menu-item"><span class="text no-text"></span></div>
                 
    			<ul id="hashTrendingTagBox"  class="hashTrendinglist">
             <!--Content area for placing templete here     
@@ -48,6 +55,7 @@
           
            
         </div>
+        
         
         <div class="hashUserSettingInfo">
         	<span class="glyphicon glyphicon-user hashSideBarBookMarkBox hashSideBarShadow"></span>
@@ -79,28 +87,31 @@
                 
             	<!--Division Area for story -->
             	<div id="storyList" class="row">
-                <!-----------------------DIVISION AREA FOR COLUMN-1----------------------------------->
-                	<div id="hashColumn1View" class="col-xs-12 col-md-5 hashMainColumn">
-                        <!--Space for Column-2-->
+                	<div>
+                		<!-----------------------DIVISION AREA FOR COLUMN-1----------------------------------->
+                		<div class="col-xs-12 col-md-5 hashMainColumn">
+                        	<!--Space for Column-2-->
                         
-                    </div>
+                    	</div>
                    
-         		<!---------------------------DIVISION AREA FOR COLUMN-2----------------------------------------->
-                   <div id="hashColumn2View" class="col-xs-12 col-md-5 hashMainColumn">
-                        <!--Space for Column-2-->
+         				<!---------------------------DIVISION AREA FOR COLUMN-2----------------------------------------->
+                   		<div class="col-xs-12 col-md-5 hashMainColumn">
+                        	<!--Space for Column-2-->
                          
-                   </div>
+                   		</div>
                    
                    
-          		<!---------------------------DIVISION AREA FOR HALFCOLUMN----------------------------------------->
-                   <div id="hashHalfColumnView" class="col-xs-12 col-md-2 hashMainHalfColumn">
-                   		<!--Space for Half Column--> 
-                        <div id="hashMainHalfStoryID" class="hashMainHalfStory">
+          				<!---------------------------DIVISION AREA FOR HALFCOLUMN----------------------------------------->
+                   		<div class="col-xs-12 col-md-2 hashMainHalfColumn">
+                   			<!--Space for Half Column--> 
+                        	<div class="hashMainHalfStory">
                         
-                        </div>
-                   </div>
-                
-                <!----------------------------NOW CREATING AN ARBITARIRY PAGE FOR MEASURING PAGE OVERFLOW---------->
+                        	</div>
+                   		</div>
+                        
+                	</div><!--End of div for page collection-->
+                	
+                    <!----------------------------NOW CREATING AN ARBITARIRY PAGE FOR MEASURING PAGE OVERFLOW---------->
                 	<div id="hashCheckColumn" class="col-xs-12 col-md-5 hashMainColumn" >
                         <!--Space for Checking page overflow Column-->
                          
@@ -137,14 +148,9 @@
 	<h4 class="col-md-12 text-danger hashMainPromoteText"
 	> Click to promote tags</h4>
     <!--POSTED HASHTAG AREA-->        
-    <div class="row">
+    <div class="row" style="margin-right:15px;">
     	<div class="col-lg-11 hashMainHashTagPostBox" >
-    		<div class="input-group">
-      			<input type="text" class="form-control hashMainHashTagPost" placeholder="Post #Tag">
-      			<span class="input-group-btn hashMainTagPostSubmitButtonGroup">
-        			<button class="btn btn-default hashMainTagPostSubmitButton" type="button">Go!</button>
-      			</span>
-    		</div> <!--input-group div ends -->
+      			<input type="text" class="form-control hashMainHashTagPost" placeholder="Post #Tag" />
   		</div> <!-- col-lg-11 -->
 	</div><!-- row -->       
 </script>
@@ -170,7 +176,7 @@
     
     <!--Template for adding postedTag model... -->
     <script type="text/template" id="hashbang-postedTag">
-		<span class=" h5 hashMainStoryPostedHashTag "> <%= tagName %> </span>
+		<span class=" hashTagBox h5 hashMainStoryPostedHashTag "> <%= tagName %> </span>
     </script>
     
 
@@ -194,6 +200,9 @@
 			$(".hashMainHalfStory").width(width);
 			
 		});
+		
+		
+		
 		
 	</script>
    
